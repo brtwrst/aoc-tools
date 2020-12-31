@@ -1,27 +1,21 @@
 import requests
-from .localstorage import load_cookie, save_cookie
-from .localstorage import get_input_cache, save_input_cache
-from .localstorage import get_answer_cache, save_answer_cache
+from .localstorage import Cookie, Cache
 from .tools import parse_website
 
 class AOCD():
-    def __init__(self, year, day):
-        self.cookie = load_cookie()
-        if not self.cookie:
-            self.cookie = input('Please enter your AOC session cookie > ')
-            save_cookie(self.cookie)
-        if not self.cookie:
-            raise ValueError('No Cookie found')
+    def __init__(self, year, day, *, delete_cache=False):
+        self.cookie = Cookie().cookie
+        self.cache = Cache(year, day, delete_cache)
         self.year = year
         self.day = day
         self.raw = self.get_raw(year, day)
 
     def get_raw(self, year, day):
-        c = get_input_cache(year, day)
-        if not c:
-            c = self.download(year, day)
-            save_input_cache(year, day, c)
-        return c
+        raw = self.cache.input
+        if not raw:
+            raw = self.download(year, day)
+            self.cache.input = raw
+        return raw
 
     def download(self, year, day):
         r = requests.get(
@@ -29,6 +23,10 @@ class AOCD():
             cookies={'session': self.cookie}
         )
         return r.text
+
+    @property
+    def lines(self):
+        return len(self.slst)
 
     @property
     def str(self):
@@ -46,12 +44,11 @@ class AOCD():
     def ilst(self, sep='\n'):
         return [int(x) for x in self.slst]
 
-    def submit(self, part, answer):
+    def __submit(self, part, answer):
         answer = str(answer)
         print(f'Submitting answer "{answer}" for {self.year}-{self.day} Part {part}')
 
-        cache = get_answer_cache(self.year, self.day, part)
-        if answer in cache:
+        if answer in self.cache.answers:
             print('SKIPPED: Already submitted earlier')
             return False
 
@@ -66,12 +63,11 @@ class AOCD():
             cookies={'session': self.cookie}
         )
         print(parse_website(r.text) or r.text)
-        save_answer_cache(self.year, self.day, part, answer)
+        self.cache.add_answer(answer)
 
 
     def p1(self, answer):
-        self.submit(part=1, answer=answer)
+        self.__submit(part=1, answer=answer)
 
     def p2(self, answer):
-        self.submit(part=2, answer=answer)
-
+        self.__submit(part=2, answer=answer)
