@@ -70,8 +70,10 @@ class AOCD():
             data={'level': part, 'answer': answer},
             cookies={'session': self.cookie}
         )
+        parsed = parse_website(r.text)
         print(parse_website(r.text) or r.text)
-        self.cache.add_answer(answer)
+        if isinstance(parsed, str) and not parsed.startswith('ERROR: Cooldown'):
+            self.cache.add_answer(answer)
 
     def p1(self, answer):
         self.__submit(part=1, answer=answer)

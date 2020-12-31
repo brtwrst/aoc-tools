@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-re_main = re.compile(r'<main>\n<article><p>(.*)</p></article>\n</main>')
+re_main = re.compile(r'(?s)<main>\n<article><p>(.*)</p></article>\n</main>')
 
 def parse_website(raw):
     if not raw.startswith('<!DOCTYPE html>'):
