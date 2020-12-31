@@ -2,8 +2,9 @@ import requests
 from .localstorage import Cookie, Cache
 from .tools import parse_website
 
+
 class AOCD():
-    def __init__(self, year, day, *, delete_cache=False):
+    def __init__(self, year, day, *, delete_cache=False, delete_cookie=False):
         self.cookie = Cookie().cookie
         self.cache = Cache(year, day, delete_cache)
         self.year = year
@@ -24,9 +25,8 @@ class AOCD():
         )
         return r.text
 
-    @property
-    def lines(self):
-        return len(self.slst)
+    def __len__(self):
+        return len(self.slist)
 
     @property
     def str(self):
@@ -34,15 +34,23 @@ class AOCD():
 
     @property
     def int(self):
-        return int(self.raw.strip())
+        return int(self.str)
 
     @property
-    def slst(self, sep='\n'):
-        return self.raw.strip().split('\n')
+    def slist(self):
+        return self.str.split('\n')
 
     @property
-    def ilst(self, sep='\n'):
-        return [int(x) for x in self.slst]
+    def ilist(self):
+        return [int(x) for x in self.slist]
+
+    @property
+    def sset(self):
+        return set(self.slist)
+
+    @property
+    def iset(self):
+        return set(self.ilist)
 
     def __submit(self, part, answer):
         answer = str(answer)
@@ -64,7 +72,6 @@ class AOCD():
         )
         print(parse_website(r.text) or r.text)
         self.cache.add_answer(answer)
-
 
     def p1(self, answer):
         self.__submit(part=1, answer=answer)
