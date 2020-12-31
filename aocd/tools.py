@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 
 re_main = re.compile(r'<main>\n<article><p>(.*)</p></article>\n</main>')
 
@@ -29,3 +30,43 @@ def parse_website(raw):
 
     return None
 
+def create_py_files(year):
+    cwd = Path.cwd()
+    year_folder = cwd / f'{year}'
+
+    confirm = input(f'Do you want to create the files for {year} in {year_folder}? (y/N)')
+
+    if confirm not in 'yY':
+        return False
+
+    year_folder.mkdir()
+
+    for day in range(1,26):
+        with open(year_folder / f'{day}.py', 'w') as f:
+            f.write(f'''""" Advent Of Code {year} : {day} """
+
+from aocd import AOCD
+
+
+def main(aocd):
+    pass
+
+
+if __name__ == '__main__':
+    aocd = AOCD({year}, {day})
+    main(aocd)
+    ''')
+
+    print('Files created successfully')
+    return True
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) == 1:
+        print('Provide the year to create the py files')
+        exit()
+    year = sys.argv[1]
+    if not year.isdigit():
+        print('Not a number')
+        exit()
+    create_py_files(year)
