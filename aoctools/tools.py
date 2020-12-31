@@ -45,7 +45,7 @@ def create_py_files(year):
         with open(year_folder / f'{day}.py', 'w') as f:
             f.write(f'''""" Advent Of Code {year} : {day} """
 
-from aocd import AOCD
+from aoctools import AOCD
 
 
 def main(aocd):
