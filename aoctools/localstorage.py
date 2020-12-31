@@ -6,7 +6,7 @@ def get_aocd_path():
     if not usr_home.exists:
         raise NotADirectoryError('User has no Home Directory')
 
-    aocd_folder = usr_home / '.aocd'
+    aocd_folder = usr_home / '.aoc-tools'
 
     if not aocd_folder.is_dir():
         aocd_folder.mkdir()
