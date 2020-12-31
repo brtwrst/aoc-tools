@@ -42,7 +42,7 @@ def get_cache_path():
     return cache_folder
 
 
-def get_cache(year, day):
+def get_input_cache(year, day):
     cache_folder = get_cache_path()
     cache_file = cache_folder / f'{year}-{day}-input.txt'
 
@@ -53,9 +53,30 @@ def get_cache(year, day):
         return f.read()
 
 
-def save_cache(year, day, raw):
+def save_input_cache(year, day, raw):
     cache_folder = get_cache_path()
     cache_file = cache_folder / f'{year}-{day}-input.txt'
 
     with open(cache_file, 'w') as f:
         f.write(raw)
+
+
+def get_answer_cache(year, day, part):
+    cache_folder = get_cache_path()
+    cache_file = cache_folder / f'{year}-{day}-{part}-answers.txt'
+
+    if not cache_file.is_file():
+        return []
+
+    with open(cache_file) as f:
+        lines = f.read().strip()
+
+    return lines.split('\n')
+
+
+def save_answer_cache(year, day, part, answer):
+    cache_folder = get_cache_path()
+    cache_file = cache_folder / f'{year}-{day}-{part}-answers.txt'
+
+    with open(cache_file, 'a') as f:
+        f.write(str(answer) + '\n')
