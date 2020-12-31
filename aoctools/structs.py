@@ -1,22 +1,28 @@
-class Vec2():
-    def __init__(self, x=0, y=0):
-        self.x = x
-        self.y = y
+class Vec():
+    def __init__(self, *args):
+        self.values = args
+
+    def __len__(self):
+        return len(self.values)
 
     def __add__(self, other):
-        return Vec2(self.x + other.x, self.y + other.y)
+        if len(self) != len(other):
+            raise TypeError('Dimension mismatch')
+        return Vec(*[x+y for x,y in zip(self.values, other.values)])
 
     def __sub__(self, other):
-        return Vec2(self.x - other.x, self.y - other.y)
+        if len(self) != len(other):
+            raise TypeError('Dimension mismatch')
+        return Vec(*[x-y for x,y in zip(self.values, other.values)])
 
     def __repr__(self):
-        return f'Vec2({self.x}, {self.y})'
+        return ('Vec(' + '{}, ' * len(self) - 1 + '{})').format(*self.values)
 
     def __hash__(self):
-        return hash((self.x, self.y))
+        return hash((*self.values,))
 
     def __eq__(self, other):
-        return (self.x, self.y) == (other.x, other.y)
+        return (*self.values,) == (*other.values,)
 
     def __ne__(self, other):
         return not(self == other)
