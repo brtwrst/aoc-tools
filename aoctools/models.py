@@ -5,7 +5,7 @@ from .tools import parse_website
 
 class AOCD():
     def __init__(self, year, day, *, delete_cache=False, delete_cookie=False):
-        self.cookie = Cookie().cookie
+        self.cookie = str(Cookie())
         self.cache = Cache(year, day, delete_cache)
         self.year = year
         self.day = day

@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 def get_aocd_path():
     usr_home = Path.home()
     if not usr_home.exists:
@@ -16,12 +15,22 @@ def get_aocd_path():
 
 class Cookie:
     def __init__(self, delete_cookie=False):
+        if delete_cookie:
+            self.delete_cookie()
+            print('Cookie deleted')
         self.cookie = self.load_cookie()
         if not self.cookie:
             self.cookie = input('Please enter your AOC session cookie > ')
             self.save_cookie()
         if not self.cookie:
             raise ValueError('No Cookie found')
+
+    def __str__(self):
+        return self.cookie
+
+    def delete_cookie(self):
+        self.cookie = ''
+        self.save_cookie()
 
     def load_cookie(self):
         cookie_file = get_aocd_path() / '.cookie'
