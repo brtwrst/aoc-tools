@@ -46,11 +46,17 @@ class AOCD():
 
     @property
     def sset(self):
-        return set(self.slist)
+        ret = set(self.slist)
+        if len(ret) < len(self):
+            print('Warning - set is smaller than list because of duplicate entries')
+        return ret
 
     @property
     def iset(self):
-        return set(self.ilist)
+        ret = set(self.ilist)
+        if len(ret) < len(self):
+            print('Warning - set is smaller than list because of duplicate entries')
+        return ret
 
     def __submit(self, part, answer):
         answer = str(answer)
