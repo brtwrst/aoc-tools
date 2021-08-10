@@ -3,7 +3,6 @@ class Vec():
         self.values = args
 
     def __len__(self):
-        print('__len__')
         return len(self.values)
 
     def __add__(self, other):
