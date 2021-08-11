@@ -1,4 +1,5 @@
 from numpy import zeros
+from collections import defaultdict
 
 class Vec():
     def __init__(self, *args, mutable=False):
@@ -64,12 +65,44 @@ class Vec():
         return self.values.count(obj)
 
 
-class Grid():
+class Grid2D():
     def __init__(self, sizex, sizey, dtype=int):
         self.sizex = sizex
         self.sizey = sizey
         self.dtype = dtype
-        self.g = zeros((sizex, sizey), dtype=dtype)
+        self.g = [[dtype(0)] * sizey for _ in range(sizex)]
+
+    def __repr__(self):
+        return f'Grid({self.sizex}, {self.sizey}, dtype={self.dtype}'
+
+    def __str__(self):
+        return str(self.g)
+
+    def __getitem__(self, key):
+        if isinstance(key, tuple):
+            return self.g[key[0]][key[1]]
+        else:
+            return self.g[key]
+
+    def __setitem__(self, key, value):
+        if isinstance(key, tuple):
+            self.g[key[0]][key[1]] = value
+        else:
+            self.g[key] = value
+
+    def count(self, obj):
+        return sum(sublist.count(obj) for sublist in self.g)
+
+    def sum(self):
+        return sum(sum(sublist) for sublist in self.g)
+
+
+class Grid2DSparse():
+    def __init__(self, sizex, sizey, dtype=int):
+        self.sizex = sizex
+        self.sizey = sizey
+        self.dtype = dtype
+        self.g = defaultdict(int)
 
     def __repr__(self):
         return f'Grid({self.sizex}, {self.sizey}, dtype={self.dtype}'
@@ -84,5 +117,11 @@ class Grid():
         self.g[key] = value
 
     def count(self, obj):
-        return (self.g == obj).sum()
+        s = 0
+        for v in self.g.values():
+            if v == obj:
+                s+=1
+        return s
 
+    def sum(self):
+        return sum(self.g.values())
