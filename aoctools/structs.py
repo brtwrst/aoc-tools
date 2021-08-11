@@ -1,6 +1,8 @@
+from numpy import zeros
+
 class Vec():
-    def __init__(self, *args):
-        self.values = args
+    def __init__(self, *args, mutable=False):
+        self.values = list(args) if mutable else args
 
     def __len__(self):
         return len(self.values)
@@ -51,3 +53,36 @@ class Vec():
 
     def __le__(self, other):
         return abs(self) <= abs(other)
+
+    def __getitem__(self, key):
+        return self.values[key]
+
+    def __setitem__(self, key, value):
+        self.values[key] = value
+
+    def count(self, obj):
+        return self.values.count(obj)
+
+
+class Grid():
+    def __init__(self, sizex, sizey, dtype=int):
+        self.sizex = sizex
+        self.sizey = sizey
+        self.dtype = dtype
+        self.g = zeros((sizex, sizey), dtype=dtype)
+
+    def __repr__(self):
+        return f'Grid({self.sizex}, {self.sizey}, dtype={self.dtype}'
+
+    def __str__(self):
+        return str(self.g)
+
+    def __getitem__(self, key):
+        return self.g[key]
+
+    def __setitem__(self, key, value):
+        self.g[key] = value
+
+    def count(self, obj):
+        return (self.g == obj).sum()
+
