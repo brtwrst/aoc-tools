@@ -23,7 +23,7 @@ def parse_website(raw):
 
     if main_text.startswith("That's not the right answer"):
         reason = re.search(r'your answer is too (\w*)', main_text)
-        return 'ERROR: Wrong answer' + (f' - Too {reason.group(1)}' if reason else '')
+        return 'WRONG ANSWER:' + (f' - Too {reason.group(1)}' if reason else '')
 
     if main_text.startswith("You don't seem to be solving the right level"):
         return 'ERROR: Already solved'

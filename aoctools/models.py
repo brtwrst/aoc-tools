@@ -15,6 +15,8 @@ class AOCD():
         raw = self.cache.input
         if not raw:
             raw = self.download(year, day)
+            if '<title>500 Internal Server Error</title>' in raw:
+                raise ValueError('Invalid Input - Wrong Cookie?')
             self.cache.input = raw
         return raw
 
@@ -78,7 +80,7 @@ class AOCD():
         )
         parsed = parse_website(r.text)
         print(parse_website(r.text) or r.text)
-        if isinstance(parsed, str) and not parsed.startswith('ERROR: Cooldown'):
+        if isinstance(parsed, str) and not parsed.startswith('ERROR:'):
             self.cache.add_answer(answer)
 
     def p1(self, answer):
