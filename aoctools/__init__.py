@@ -1,2 +1,2 @@
 from .models import AOCD
-from .structs import Vec
+from .structs import *
