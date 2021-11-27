@@ -48,7 +48,7 @@ def create_py_files(year):
 from aoctools import *
 
 
-def main(aocd):
+def main(aocd: AOCD):
     pass
 
 
