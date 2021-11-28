@@ -1,5 +1,6 @@
 import re
 from pathlib import Path
+from random import randrange
 
 re_main = re.compile(r'(?s)<main>\n<article><p>(.*)</p></article>\n</main>')
 
@@ -58,6 +59,52 @@ if __name__ == '__main__':
     ''')
 
     print('Files created successfully')
+    return True
+
+def miller_rabin(n):
+    checks = [2,3,5,7,11] if n < 2152302898747 else [2,3,5,7,11,13,17,19,23,29,31,37]
+    return all(miller_rabin_check(n, a) for a in checks)
+
+def miller_rabin_check(n, a):
+    d = n - 1
+    m = 0
+    while not d&1:
+        d //= 2
+        m += 1
+
+    r = pow(a,d,n)
+    return r==1 or r==n-1
+
+def miller_rabin2(n, k=40):
+
+    # Implementation uses the Miller-Rabin Primality Test
+    # The optimal number of rounds for this test is 40
+    # See http://stackoverflow.com/questions/6325576/how-many-iterations-of-rabin-miller-should-i-use-for-cryptographic-safe-primes
+    # for justification
+
+    # If number is even, it's a composite number
+
+    if n == 2:
+        return True
+
+    if n % 2 == 0:
+        return False
+
+    r, s = 0, n - 1
+    while s % 2 == 0:
+        r += 1
+        s //= 2
+    for _ in range(k):
+        a = randrange(2, n - 1)
+        x = pow(a, s, n)
+        if x == 1 or x == n - 1:
+            continue
+        for _ in range(r - 1):
+            x = pow(x, 2, n)
+            if x == n - 1:
+                break
+        else:
+            return False
     return True
 
 if __name__ == "__main__":
