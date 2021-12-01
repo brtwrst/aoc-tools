@@ -1,4 +1,5 @@
 import requests
+import webbrowser
 from .localstorage import Cookie, Cache
 from .tools import parse_website
 
@@ -20,15 +21,26 @@ class AOCD():
             self.cache.input = raw
         return raw
 
-    def download(self, year, day):
+    def download(self):
         r = requests.get(
-            url=f'https://adventofcode.com/{year}/day/{day}/input',
+            url=self.input_url,
             cookies={'session': self.cookie}
         )
         return r.text
 
+    def open(self):
+        webbrowser.open(url=self.url)
+
     def __len__(self):
         return len(self.slist)
+
+    @property
+    def url(self):
+        return f'https://adventofcode.com/{self.year}/day/{self.day}'
+
+    @property
+    def input_url(self):
+        return f'{self.url}/input'
 
     @property
     def str(self):
