@@ -9,6 +9,10 @@ pip install -e .
 or
 pip install -e --user .
 ```
+## Usage
+```
+from aoctools import *
+```
 
 ## Adds the following things
 ### AOCD(year, day)
