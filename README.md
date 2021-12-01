@@ -34,9 +34,9 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
 `aocd.int` parse input as single int  
 `aocd.str` parse input as single str  
 `aocd.ilist` parse input as list of int  
-`aocd.slist` parse input as list of str
-`aocd.iset` parse input as set of int
-`aocd.sset` parse input as set of str
+`aocd.slist` parse input as list of str  
+`aocd.iset` parse input as set of int  
+`aocd.sset` parse input as set of str  
 
 #### Output/Submission
 
