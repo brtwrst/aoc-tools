@@ -13,7 +13,7 @@ class AOCD():
         self.raw = self.get_raw()
         self.base_url = 'https://adventofcode.com'
 
-    def get_raw(self)
+    def get_raw(self):
         raw = self.cache.input
         if not raw:
             raw = self.download()
