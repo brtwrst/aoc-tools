@@ -8,12 +8,12 @@ from .tools import parse_website
 
 class AOCD():
     def __init__(self, year, day, *, delete_cache=False, delete_cookie=False):
-        self.cookie = str(Cookie(delete_cookie))
-        self.cache = Cache(year, day, delete_cache)
+        self.base_url = 'https://adventofcode.com'
         self.year = year
         self.day = day
+        self.cookie = str(Cookie(delete_cookie))
+        self.cache = Cache(year, day, delete_cache)
         self.raw = self.get_raw()
-        self.base_url = 'https://adventofcode.com'
 
     def get_raw(self):
         raw = self.cache.input
