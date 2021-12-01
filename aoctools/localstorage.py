@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 def get_aocd_path():
     usr_home = Path.home()
     if not usr_home.exists:

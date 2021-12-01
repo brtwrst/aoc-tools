@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 class Vec():
     def __init__(self, *args, mutable=False):
         self.values = list(args) if mutable else args
@@ -119,7 +120,7 @@ class Grid2DSparse():
         s = 0
         for v in self.g.values():
             if v == obj:
-                s+=1
+                s += 1
         return s
 
     def sum(self):

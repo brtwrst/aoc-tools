@@ -4,6 +4,7 @@ from random import randrange
 
 re_main = re.compile(r'(?s)<main>\n<article><p>(.*)</p></article>\n</main>')
 
+
 def parse_website(raw):
     if not raw.startswith('<!DOCTYPE html>'):
         return 'ERROR: No HTML Received'
@@ -31,6 +32,7 @@ def parse_website(raw):
 
     return None
 
+
 def create_py_files(year):
     cwd = Path.cwd()
     year_folder = cwd / f'{year}'
@@ -42,7 +44,7 @@ def create_py_files(year):
 
     year_folder.mkdir()
 
-    for day in range(1,26):
+    for day in range(1, 26):
         with open(year_folder / f'{day}.py', 'w') as f:
             f.write(f'''""" Advent Of Code {year} : {day} """
 
@@ -61,19 +63,23 @@ if __name__ == '__main__':
     print('Files created successfully')
     return True
 
+
 def miller_rabin(n):
-    checks = [2,3,5,7,11] if n < 2152302898747 else [2,3,5,7,11,13,17,19,23,29,31,37]
+    checks = [2, 3, 5, 7, 11] if n < 2152302898747 else [
+        2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
     return all(miller_rabin_check(n, a) for a in checks)
+
 
 def miller_rabin_check(n, a):
     d = n - 1
     m = 0
-    while not d&1:
+    while not d & 1:
         d //= 2
         m += 1
 
-    r = pow(a,d,n)
-    return r==1 or r==n-1
+    r = pow(a, d, n)
+    return r == 1 or r == n-1
+
 
 def miller_rabin2(n, k=40):
 
@@ -106,6 +112,7 @@ def miller_rabin2(n, k=40):
         else:
             return False
     return True
+
 
 if __name__ == "__main__":
     import sys

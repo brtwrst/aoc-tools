@@ -1,6 +1,8 @@
-import requests
 import webbrowser
-from .localstorage import Cookie, Cache
+
+import requests
+
+from .localstorage import Cache, Cookie
 from .tools import parse_website
 
 
