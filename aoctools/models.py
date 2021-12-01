@@ -10,12 +10,13 @@ class AOCD():
         self.cache = Cache(year, day, delete_cache)
         self.year = year
         self.day = day
-        self.raw = self.get_raw(year, day)
+        self.raw = self.get_raw()
+        self.base_url = 'https://adventofcode.com'
 
-    def get_raw(self, year, day):
+    def get_raw(self)
         raw = self.cache.input
         if not raw:
-            raw = self.download(year, day)
+            raw = self.download()
             if '<title>500 Internal Server Error</title>' in raw:
                 raise ValueError('Invalid Input - Wrong Cookie?')
             self.cache.input = raw
@@ -36,11 +37,15 @@ class AOCD():
 
     @property
     def url(self):
-        return f'https://adventofcode.com/{self.year}/day/{self.day}'
+        return f'{self.base_url}/{self.year}/day/{self.day}'
 
     @property
     def input_url(self):
         return f'{self.url}/input'
+
+    @property
+    def answer_url(self):
+        return f'{self.url}/answer'
 
     @property
     def str(self):
@@ -81,11 +86,11 @@ class AOCD():
             return False
 
         r = requests.post(
-            url=f'https://adventofcode.com/{self.year}/day/{self.day}/answer',
+            url=self.answer_url,
             headers={
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'origin': 'https://adventofcode.com',
-                'referer': f'https://adventofcode.com/{self.year}/day/{self.day}'
+                'origin': self.base_url,
+                'referer': self.url
             },
             data={'level': part, 'answer': answer},
             cookies={'session': self.cookie}
