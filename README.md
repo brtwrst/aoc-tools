@@ -53,7 +53,8 @@ Fast primality checks
 ### create_py_files(year)
 
 This will create 25 template files (1 for each day) for a given year of AOC.  
-Can also be run by calling the tools file with a parameter `python tools.py <year>`
+Can also be run by calling the tools file with a parameter `python tools.py <year>`  
+And from anywhere once installed: `python -m aoctools.tools <year>` 
 
 ### Vec
 
