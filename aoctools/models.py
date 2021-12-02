@@ -1,7 +1,5 @@
 import webbrowser
-
 import requests
-
 from .localstorage import Cache, Cookie
 from .tools import parse_website
 
@@ -21,6 +19,8 @@ class AOCD():
             raw = self.download()
             if '<title>500 Internal Server Error</title>' in raw:
                 raise ValueError('Invalid Input - Wrong Cookie?')
+            if "Please don't repeatedly request this endpoint" in raw:
+                raise ValueError('Invalid Input - Please try again later')
             self.cache.input = raw
         return raw
 
