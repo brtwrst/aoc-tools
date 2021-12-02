@@ -22,6 +22,8 @@ class Cookie:
         self.cookie = self.load_cookie()
         if not self.cookie:
             self.cookie = input('Please enter your AOC session cookie > ')
+            if ' ' in self.cookie or not 80 < len(self.cookie) < 100:
+                raise ValueError('This does not look like a valid cookie')
             self.save_cookie()
         if not self.cookie:
             raise ValueError('No Cookie found')

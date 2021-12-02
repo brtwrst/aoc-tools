@@ -5,8 +5,10 @@ from .tools import parse_website
 
 
 class AOCD():
+
+    base_url = 'https://adventofcode.com'
+
     def __init__(self, year, day, *, delete_cache=False, delete_cookie=False):
-        self.base_url = 'https://adventofcode.com'
         self.year = year
         self.day = day
         self.cookie = str(Cookie(delete_cookie))
@@ -21,6 +23,10 @@ class AOCD():
                 raise ValueError('Invalid Input - Wrong Cookie?')
             if "Please don't repeatedly request this endpoint" in raw:
                 raise ValueError('Invalid Input - Please try again later')
+            if 'Please log in to get your puzzle input.' in raw:
+                print('Cookie invalid or expired - try again after re-setting cookie')
+                self.cookie = str(Cookie(delete_cookie=True))
+                exit()
             self.cache.input = raw
         return raw
 
@@ -32,22 +38,22 @@ class AOCD():
         return r.text
 
     def open(self):
-        webbrowser.open(url=self.url)
+        webbrowser.open(url=self.puzzle_url)
 
     def __len__(self):
         return len(self.slist)
 
     @property
-    def url(self):
-        return f'{self.base_url}/{self.year}/day/{self.day}'
+    def puzzle_url(self):
+        return f'{AOCD.base_url}/{self.year}/day/{self.day}'
 
     @property
     def input_url(self):
-        return f'{self.url}/input'
+        return f'{self.puzzle_url}/input'
 
     @property
     def answer_url(self):
-        return f'{self.url}/answer'
+        return f'{self.puzzle_url}/answer'
 
     @property
     def str(self):
@@ -91,8 +97,8 @@ class AOCD():
             url=self.answer_url,
             headers={
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'origin': self.base_url,
-                'referer': self.url
+                'origin': AOCD.base_url,
+                'referer': self.puzzle_url
             },
             data={'level': part, 'answer': answer},
             cookies={'session': self.cookie}
