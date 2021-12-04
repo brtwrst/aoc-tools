@@ -78,12 +78,17 @@ Some tool functions/classes that help with programming puzzles.
 * `miller_rabin2(n)` works for big primes but is probability based
 * Both will return `True` if the given number `n` is prime and `False` if it is not
 
-### Matrix manipulators
-* `matrix_transpose` will [transpose](https://en.wikipedia.org/wiki/Transpose) a 2D matrix, the result will be a list of tuples.
+### Matrix manipulation functions 
+* `matrix_transpose` will [transpose](https://www.geeksforgeeks.org/transpose-of-a-matrix-matrices-class-12-maths/) a 2D matrix, the result will be a list of tuples.
 * `matrix_transpose_lists` will transpose a 2D matrix, the result will be a list of tuples.
 * `matrix_transpose_strings` will transpose a 2D matrix, the result will be a list of strings.
+* `matrix_rotate` will [rotate](https://www.geeksforgeeks.org/rotate-a-matrix-by-90-degree-in-clockwise-direction-without-using-any-extra-space/) a 2D matrix clockwise 90 degrees, the result will be a list of tuples.
+* `matrix_rotate_lists` will rotate a 2D matrix clockwise 90 degrees, the result will be a list of tuples.
+* `matrix_rotate_strings` will rotate a 2D matrix clockwise 90 degrees, the result will be a list of strings.
+
 
 ```python
+# consider the following 2D matrix
 matrix = [
     [1,2,3],
     [4,5,6],
@@ -120,6 +125,39 @@ transposed_matrix_strings = [
     '147',
     '258',
     '369'
+]
+'''
+
+rotated_matrix = matrix_rotate(matrix)
+
+# result
+'''
+rotated_matrix = [
+    (7,4,1),
+    (8,5,2),
+    (9,6,3)
+]
+'''
+
+rotated_matrix_lists = matrix_rotate_lists(matrix)
+
+# result
+'''
+rotated_matrix_lists = [
+    [7,4,1],
+    [8,5,2],
+    [9,6,3]
+]
+'''
+
+rotated_matrix_strings = matrix_rotate_strings(matrix)
+
+# result
+'''
+rotated_matrix_strings = [
+    '741',
+    '852',
+    '963'
 ]
 '''
 ```
