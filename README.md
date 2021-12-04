@@ -17,7 +17,7 @@ pip install -e --user .
 ```python
 from aoctools import *
 aocd = AOCD(2021, 1)
-puzzle_input = aocd. ilist
+puzzle_input = aocd.ilist
 # calculate the answers
 aocd.p1('<answer to part 1>')
 aocd.p2('<answer to part 2>')
