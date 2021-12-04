@@ -78,6 +78,52 @@ Some tool functions/classes that help with programming puzzles.
 * `miller_rabin2(n)` works for big primes but is probability based
 * Both will return `True` if the given number `n` is prime and `False` if it is not
 
+### Matrix manipulators
+* `matrix_transpose` will [transpose](https://en.wikipedia.org/wiki/Transpose) a 2D matrix, the result will be a list of tuples.
+* `matrix_transpose_lists` will transpose a 2D matrix, the result will be a list of tuples.
+* `matrix_transpose_strings` will transpose a 2D matrix, the result will be a list of strings.
+
+```python
+matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+]
+
+transposed_matrix = matrix_transpose(matrix)
+
+# result
+'''
+transposed_matrix = [
+    (1,4,7),
+    (2,5,8),
+    (3,6,9)
+]
+'''
+
+transposed_matrix_lists = matrix_transpose_lists(matrix)
+
+# result
+'''
+transposed_matrix_lists = [
+    [1,4,7],
+    [2,5,8],
+    [3,6,9]
+]
+'''
+
+transposed_matrix_strings = matrix_transpose_strings(matrix)
+
+# result
+'''
+transposed_matrix_strings = [
+    '147',
+    '258',
+    '369'
+]
+'''
+```
+
 ### Template file generation
 `create_py_files(year)`
 * This will create 25 template files (1 for each day) for a given year of AOC.  
