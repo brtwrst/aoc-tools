@@ -13,26 +13,71 @@ class Vec():
             raise TypeError('Can only add vectors')
         if len(self) != len(other):
             raise TypeError('Dimension mismatch')
-        return Vec(*[x+y for x, y in zip(self.values, other.values)])
+        return Vec(*[x + y for x, y in zip(self.values, other.values)])
 
     def __sub__(self, other):
         if not isinstance(other, Vec):
             raise TypeError('Can only subtract vectors')
         if len(self) != len(other):
             raise TypeError('Dimension mismatch')
-        return Vec(*[x-y for x, y in zip(self.values, other.values)])
+        return Vec(*[x - y for x, y in zip(self.values, other.values)])
 
     def __mul__(self, other):
-        if isinstance(other, int):
-            return Vec(*[x*other for x in self.values])
+        if isinstance(other, (int, float)):
+            return Vec(*[x * other for x in self.values])
         elif isinstance(other, Vec):
             if len(self) != len(other):
                 raise TypeError('Dimension mismatch')
             return sum(x*y for x, y in zip(self.values, other.values))
         else:
-            raise TypeError('Can only multiply with scalars or vectors of same dimension')
+            raise TypeError('Vec can only be multiplied with Vec of same dimension or scalars')
 
     __rmul__ = __mul__
+
+    def __truediv__(self, other):
+        if not isinstance(other, (int, float)):
+            raise TypeError('Vec can only be divided by int or float')
+        return Vec(*[x / other for x in self.values])
+
+    def __floordiv__(self, other):
+        if not isinstance(other, (int, float)):
+            raise TypeError('Vec can only be floor-divided by int or float')
+        return Vec(*[x // other for x in self.values])
+
+    def __mod__(self, other):
+        if not isinstance(other, (int, float)):
+            raise TypeError('Vec modulo only supported with int or float')
+        return Vec(*[x % other for x in self.values])
+
+    def __pow__(self, other, modulo=None):
+        if not isinstance(other, (int, float)):
+            raise TypeError('Vec exponentiation only supported with int or float')
+        return Vec(*[pow(x,other,modulo) for x in self.values])
+
+    def __lshift__(self, other, modulo=None):
+        if not isinstance(other, int):
+            raise TypeError('Vec left shift only supported with int')
+        return Vec(*[x << other for x in self.values])
+
+    def __rshift__(self, other, modulo=None):
+        if not isinstance(other, int):
+            raise TypeError('Vec right shift only supported with int')
+        return Vec(*[x >> other for x in self.values])
+
+    def __and__(self, other, modulo=None):
+        if not isinstance(other, int):
+            raise TypeError('Vec AND only supported with int')
+        return Vec(*[x & other for x in self.values])
+
+    def __xor__(self, other, modulo=None):
+        if not isinstance(other, int):
+            raise TypeError('Vec XOR only supported with int')
+        return Vec(*[x ^ other for x in self.values])
+
+    def __or__(self, other, modulo=None):
+        if not isinstance(other, int):
+            raise TypeError('Vec OR only supported with int')
+        return Vec(*[x | other for x in self.values])
 
     def __repr__(self):
         return ('Vec(' + '{}, ' * (len(self) - 1) + '{})').format(*self.values)
