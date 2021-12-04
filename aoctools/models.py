@@ -14,6 +14,11 @@ class AOCD():
         self.cookie = str(Cookie(delete_cookie))
         self.cache = Cache(year, day, delete_cache)
         self.raw = self.get_raw()
+        self.is_example = False
+
+    def set_example(self, raw_example):
+        self.raw = raw_example
+        self.is_example = True
 
     def get_raw(self):
         raw = self.cache.input
@@ -87,7 +92,12 @@ class AOCD():
 
     def __submit(self, part, answer):
         answer = str(answer)
-        print(f'Submitting answer "{answer}" for {self.year}-{self.day} Part {part}')
+
+        if self.is_example:
+            print(f'Result of {self.year}-{self.day} Part {part} using EXAMPLE input: "{answer}"')
+            return
+        else:
+            print(f'Submitting answer "{answer}" for {self.year}-{self.day} Part {part}')
 
         if answer in self.cache.answers:
             print('SKIPPED: Already submitted earlier')

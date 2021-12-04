@@ -16,9 +16,14 @@ pip install -e --user .
 
 ```python
 from aoctools import *
+aocd = AOCD(2021, 1)
+puzzle_input = aocd. ilist
+# calculate the answers
+aocd.p1('<answer to part 1>')
+aocd.p2('<answer to part 2>')
 ```
 
-## Adds the following things
+## Detailed usage description
 
 ### AOCD(year, day)
 
@@ -29,48 +34,71 @@ aocd = AOCD(2021, 1)
 This Class will pull your input and submit your solutions.  
 This will ask you for your AOC session-cookie on the first run. The cookie can be found in the chrome dev tools while you are logged in to adventofcode.com (Application -> Cookies)
 
-#### Input
+### Input
 
-`aocd.int` parse input as single int  
-`aocd.str` parse input as single str  
-`aocd.ilist` parse input as list of int  
-`aocd.slist` parse input as list of str  
-`aocd.iset` parse input as set of int  
-`aocd.sset` parse input as set of str  
+* `aocd.int` parse input as single int  
+* `aocd.str` parse input as single str  
+* `aocd.ilist` parse input as list of int  
+* `aocd.slist` parse input as list of str  
+* `aocd.iset` parse input as set of int  
+* `aocd.sset` parse input as set of str  
 
-#### Output/Submission
+### Output/Submission
 
-`aocd.p1`submit answer for part 1  
-`aocd.p2`submit answer for part 2
+* `aocd.p1` submit answer for part 1  
+* `aocd.p2` submit answer for part 2
 
-### miller_rabin(n), miller_rabin(2)
+### Using example input
+Give the example input verbatim as multiline string to `AOCD.set_example(<input>)` before parsing. The following example uses the input of https://adventofcode.com/2021/day/3
+```python
+aocd = AOCD(2021, 3)
+aocd.set_example("""00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010""")
 
-Fast primality checks  
+inp = aocd.slist
+```
 
-* miller_rabin only works up to about 10**23
-* miller_rabin2 works for big primes but is probability based
+If you set example input and call `AOCD.p1() or AOCD.p2()`, the answer will only be displayed and not submitted to the website.
 
-### create_py_files(year)
+## Tools
+Some tool functions/classes that help with programming puzzles.
 
-This will create 25 template files (1 for each day) for a given year of AOC.  
-Can also be run by calling the tools file with a parameter `python tools.py <year>`  
-And from anywhere once installed: `python -m aoctools.tools <year>` 
+### Fast primality checks
+* `miller_rabin(n)` only works up to about 10**23
+* `miller_rabin2(n)` works for big primes but is probability based
+* Both will return `True` if the given number `n` is prime and `False` if it is not
 
-### Vec
+### Template file generation
+`create_py_files(year)`
+* This will create 25 template files (1 for each day) for a given year of AOC.  
+* Can be run anywhere once installed: `python -m aoctools.tools <year>` 
 
-This is a simple implementation of a vector.  
-Objects of this class are hashable (can be used as dict keys)
+### Simple vector
 
 ```python
 v = Vec(1,2,3)
 ```
 
-Supported operations
+* This is a simple implementation of a vector.
+* Objects of this class are hashable (can be used as dict keys)
+* Vectors can be any length/dimension `Vec(1,2)` / `Vec(1,2,3,4,5)` although only vectors of the same dimension can be added/multiplied
 
+#### Supported operations
 * Dimension/Length `len(Vec(1,2,3))`
 * Addition `Vec(1,2,3) + Vec(1,2,3)`
 * Subtraction `Vec(1,2,3) - Vec(1,2,3)`
-* Multiplication `Vec(1,2,3) * Vec(2,3,4)` or `Vec(1,2,3) * 2`
+* Vector Multiplication `Vec(1,2,3) * Vec(2,3,4)`
+* Scalar Multiplication `Vec(1,2,3) * 2`
 * Comparison `< > == != <= >=`
 * Length/Absolute `abs(Vec(1,2,3))` (will give the vector magnitude)
 * element access `Vec(1,2,3)[0]` (also assignment `Vec(1,2,3)[2] = 2`)
