@@ -80,12 +80,13 @@ Some tool functions/classes that help with programming puzzles.
 
 ### Matrix manipulation functions 
 * `matrix_transpose` will [transpose](https://www.geeksforgeeks.org/transpose-of-a-matrix-matrices-class-12-maths/) a 2D matrix, the result will be a list of tuples.
-* `matrix_transpose_lists` will transpose a 2D matrix, the result will be a list of tuples.
+* `matrix_transpose_lists` will transpose a 2D matrix, the result will be a list of lists.
 * `matrix_transpose_strings` will transpose a 2D matrix, the result will be a list of strings.
+* `matrix_transpose_dicts` will transpose a 2D matrix, the result will be a list of dicts.
 * `matrix_rotate` will [rotate](https://www.geeksforgeeks.org/rotate-a-matrix-by-90-degree-in-clockwise-direction-without-using-any-extra-space/) a 2D matrix clockwise 90 degrees, the result will be a list of tuples.
-* `matrix_rotate_lists` will rotate a 2D matrix clockwise 90 degrees, the result will be a list of tuples.
+* `matrix_rotate_lists` will rotate a 2D matrix clockwise 90 degrees, the result will be a list of lists.
 * `matrix_rotate_strings` will rotate a 2D matrix clockwise 90 degrees, the result will be a list of strings.
-
+* `matrix_rotate_dicts` will rotate a 2D matrix clockwise 90 degrees, the result will be a list of dicts.
 
 ```python
 # consider the following 2D matrix
@@ -117,6 +118,13 @@ transposed_matrix_lists = [
 ]
 '''
 
+# consider the following 2D matrix - strings are iterables too
+matrix = [
+    '123',
+    '456',
+    '789'
+]
+
 transposed_matrix_strings = matrix_transpose_strings(matrix)
 
 # result
@@ -127,6 +135,31 @@ transposed_matrix_strings = [
     '369'
 ]
 '''
+
+# consider the following 2D matrix
+matrix = [
+    {'A': 1, 'B': 2, 'C': 3},
+    {'D': 4, 'E': 5, 'F': 6},
+    {'G': 7, 'H': 8, 'I': 9}
+]
+
+transposed_matrix_dicts = matrix_transpose_dicts(matrix)
+
+# result
+'''
+transposed_matrix_dicts = [
+    {'A': 1, 'D': 4, 'G': 7},
+    {'B': 2, 'E': 5, 'H': 8},
+    {'C': 3, 'F': 6, 'I': 9}
+]
+'''
+
+# consider the following 2D matrix
+matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+]
 
 rotated_matrix = matrix_rotate(matrix)
 
@@ -150,6 +183,13 @@ rotated_matrix_lists = [
 ]
 '''
 
+# consider the following 2D matrix - strings are iterables too
+matrix = [
+    '123',
+    '456',
+    '789'
+]
+
 rotated_matrix_strings = matrix_rotate_strings(matrix)
 
 # result
@@ -158,6 +198,24 @@ rotated_matrix_strings = [
     '741',
     '852',
     '963'
+]
+'''
+
+# consider the following 2D matrix
+matrix = [
+    {'A': 1, 'B': 2, 'C': 3},
+    {'D': 4, 'E': 5, 'F': 6},
+    {'G': 7, 'H': 8, 'I': 9}
+]
+
+rotated_matrix_dicts = matrix_rotate_dicts(matrix)
+
+# result
+'''
+rotated_matrix_dicts = [
+    {'G': 7, 'D': 4, 'A': 1},
+    {'H': 8, 'E': 5, 'B': 2},
+    {'I': 9, 'F': 6, 'C': 3}
 ]
 '''
 ```

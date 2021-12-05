@@ -122,6 +122,11 @@ def matrix_transpose_lists(matrix):
 def matrix_transpose_strings(matrix):
     return [''.join(str(c) for c in r) for r in zip(*matrix)]
 
+def matrix_transpose_dicts(matrix):
+    matrix = [list(r.items()) for r in matrix]
+    matrix = matrix_transpose(matrix)
+    return [dict(r) for r in matrix]
+
 def matrix_rotate(matrix):
     return list(zip(*matrix[::-1]))
 
@@ -130,6 +135,11 @@ def matrix_rotate_lists(matrix):
 
 def matrix_rotate_strings(matrix):
     return [''.join(str(c) for c in r) for r in zip(*matrix[::-1])]
+
+def matrix_rotate_dicts(matrix):
+    matrix = [list(r.items()) for r in matrix]
+    matrix = matrix_rotate(matrix)
+    return [dict(r) for r in matrix]
 
 if __name__ == "__main__":
     import sys
