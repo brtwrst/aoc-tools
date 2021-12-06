@@ -71,7 +71,6 @@ class AOCD():
     @property
     def slist(self):
         if self.raw.count('\n') > 1:
-            print('FOO', self.raw.count('\n'))
             return self.str.split('\n')
         else:
             if self.raw.count(',') > 0:
