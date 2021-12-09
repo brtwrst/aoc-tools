@@ -108,34 +108,3 @@ class Vec():
 
     def count(self, obj):
         return self.values.count(obj)
-
-
-class SparseGrid():
-    def __init__(self, default_value=0):
-        self.default_value = default_value
-        self.g = defaultdict(lambda : self.default_value)
-
-    def __repr__(self):
-        return f'Grid2DSparse(default_value={self.default_value})'
-
-    def __str__(self):
-        return str(self.g)
-
-    def __getitem__(self, key):
-        if not isinstance(key, (tuple, Vec)):
-            raise ValueError('Please use tuple or Vec as key')
-        return self.g[key]
-
-    def __setitem__(self, key, value):
-        if not isinstance(key, (tuple, Vec)):
-            raise ValueError('Please use tuple or Vec as key')
-        self.g[key] = value
-
-    def count(self, obj):
-        return sum(v == obj for v in self.g.values())
-
-    def count_greater_than(self, obj):
-        return sum(v > obj for v in self.g.values())
-
-    def sum(self):
-        return sum(self.g.values())
