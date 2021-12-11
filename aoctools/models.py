@@ -17,6 +17,8 @@ class AOCD():
         self.is_example = False
 
     def set_example(self, raw_example):
+        if not raw_example.endswith('\n'):
+            raw_example += '\n'
         self.raw = raw_example
         self.is_example = True
 
@@ -68,49 +70,83 @@ class AOCD():
     def int(self):
         return int(self.str)
 
+    # -----------------------------------------
+    # List Parsing
+    # -----------------------------------------
     @property
     def slist(self):
-        if self.raw.count('\n') > 1:
-            return self.str.split('\n')
-        else:
-            if self.raw.count(',') > 0:
-                return self.str.split(',')
-            # Add more separators here if they come up
+        return self.str.split('\n')
 
     @property
     def ilist(self):
         return [int(x) for x in self.slist]
 
+    def slist_split_at(self, sep):
+        return self.str.split(sep)
+
+    def ilist_split_at(self, sep):
+        return [int(x) for x in self.slist_split_at(sep)]
+
+    # -----------------------------------------
+    # Set Parsing
+    # -----------------------------------------
     @property
     def sset(self):
         ret = set(self.slist)
         if len(ret) < len(self):
-            print('Warning - set is smaller than list because of duplicate entries')
+            print('WARNING - Parsed set is smaller than list because of duplicate entries')
         return ret
 
     @property
     def iset(self):
         ret = set(self.ilist)
         if len(ret) < len(self):
-            print('Warning - set is smaller than list because of duplicate entries')
+            print('WARNING - Parsed set is smaller than list because of duplicate entries')
         return ret
 
+    def sset_split_at(self, sep):
+        ret = set(self.slist_split_at(sep))
+        if len(ret) < len(self):
+            print('WARNING - Parsed set is smaller than list because of duplicate entries')
+        return ret
+
+    def iset_split_at(self, sep):
+        ret = set(self.ilist_split_at(sep))
+        if len(ret) < len(self):
+            print('WARNING - Parsed set is smaller than list because of duplicate entries')
+        return ret
+
+    # -----------------------------------------
+    # Grid Parsing
+    # -----------------------------------------
     @property
     def sgrid(self):
-        ret = dict()
-        for y in range(len(self.slist)):
-            for x in range(len(self.slist[0])):
-                ret[x, y] = self.slist[y][x]
-        return ret
+        return self.__parse_as_grid(sep=None, t=str)
 
     @property
     def igrid(self):
-        ret = dict()
-        for y in range(len(self.slist)):
-            for x in range(len(self.slist[0])):
-                ret[x, y] = int(self.slist[y][x])
-        return ret
+        return self.__parse_as_grid(sep=None, t=int)
 
+    def sgrid_split_at(self, sep):
+        return self.__parse_as_grid(sep=sep, t=str)
+
+    def igrid_split_at(self, sep):
+        return self.__parse_as_grid(sep=sep, t=int)
+
+    def __parse_as_grid(self, sep=None, t=str):
+        grid = dict()
+        for y, line in enumerate(self.slist):
+            if sep is None:
+                line = list(line)
+            else:
+                line = line.split(sep)
+            for x, element in enumerate(line):
+                grid[x, y] = t(element)
+        return grid
+
+    # -----------------------------------------
+    # Submitting answer
+    # -----------------------------------------
     def __submit(self, part, answer):
         answer = str(answer)
 

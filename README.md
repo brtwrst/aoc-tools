@@ -36,16 +36,130 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
 
 ### Input
 
-* `aocd.int` parse input as single int  
-* `aocd.str` parse input as single str  
-* `aocd.ilist` parse input as list of int  
-* `aocd.slist` parse input as list of str  
-* `aocd.iset` parse input as set of int  
-* `aocd.sset` parse input as set of str  
+* string / number parsing
+    * Example Input  
+        ```
+        1234
+        ```
+    * `aocd.int` parse input as single int
+        *   ```py
+            -> 1234
+            ```
+    * `aocd.str` parse input as single str
+        *   ```py
+            -> '1234'
+            ```
+* List Parsing (split at newline)
+    * Example Input  
+        ```
+        12
+        34
+        ```
+    * `aocd.ilist` parse input as list of int (split at newline)
+        *   ```py
+            [12, 34]
+            ```
+    * `aocd.slist` parse input as list of str (split at newline)
+        *   ```py
+            ['12', '34']
+            ```
+* List Parsing (split at arbitrary separator)
+    * Example Input  
+        ```
+        1;2;3;4
+        ```
+    * `aocd.ilist_split_at(sep)` parse input as list of int (split at sep)
+        *   ```py
+            aocd.ilist_split_at(';') -> [1,2,3,4]
+            ```
+    * `aocd.slist_split_at(sep)` parse input as list of str (split at sep)
+        *   ```py
+            aocd.slist_split_at(';') -> ['1','2','3','4']
+            ```
+
+* Set Parsing (split at newline)
+    * Example Input  
+        ```
+        12
+        34
+        ```
+    * `aocd.iset` parse input as set of int
+        *   ```py
+            {12, 34}
+            ```
+    * `aocd.sset` parse input as set of str
+        *   ```py
+            {'12', '34'}
+            ```
+* Set Parsing (split at arbitrary separator)
+    * Example Input  
+        ```
+        1;2;3;4;4
+        ```
+    * `aocd.ilist_split_at(sep)` parse input as list of int (split at sep)
+        *   ```py
+            aocd.iset_split_at(';') -> {1,2,3,4}
+            ```
+    * `aocd.slist_split_at(sep)` parse input as list of str (split at sep)
+        *   ```py
+            aocd.sset_split_at(';') -> {'1','2','3','4'}]
+            ```
+
+* Grid Parsing (when input is formatted as a grid of single digits/characters)
+    * Example Input  
+        ```
+        12
+        34
+        ```
+    * `aocd.igrid` parse input as a grid of single digit numbers (split input at newline)
+        *   ```py
+            {
+                (0,0) : 1, 
+                (1,0) : 2, 
+                (0,1) : 3, 
+                (1,1) : 4, 
+            }
+            ```
+    * `aocd.sgrid` parse input as a grid of single characters (split input at newline)
+        *   ```py
+            {
+                (0,0) : '1', 
+                (1,0) : '2', 
+                (0,1) : '3', 
+                (1,1) : '4', 
+            }
+            ```
+* Grid Parsing (when input is formatted as a grid of separated values on each line)
+    * Example Input  
+        ```
+        1,2
+        3,4
+        ```
+    * `aocd.igrid_split_at(sep)` parse input as a grid of integers (split input at newline) (split line at sep)
+        *   ```py
+            aocd.igrid_split_at(',') ->
+            {
+                (0,0) : 1, 
+                (1,0) : 2, 
+                (0,1) : 3, 
+                (1,1) : 4, 
+            }
+            ```
+    * `aocd.sgrid_split_at(sep)` parse input as a grid of strings (split input at newline) (split line at sep)
+        *   ```py
+            aocd.sgrid_split_at(',') ->
+            {
+                (0,0) : '1', 
+                (1,0) : '2', 
+                (0,1) : '3', 
+                (1,1) : '4', 
+            }
+            ```
+
 
 ### Output/Submission
 
-* `aocd.p1` submit answer for part 1  
+* `aocd.p1` submit answer for part 1
 * `aocd.p2` submit answer for part 2
 
 ### Using example input
@@ -225,7 +339,7 @@ rotated_matrix_dicts = [
 * This will create 25 template files (1 for each day) for a given year of AOC.  
 * Can be run anywhere once installed: `python -m aoctools.tools <year>` 
 
-### Simple vector
+## Simple vector
 
 ```python
 v = Vec(1,2,3)
