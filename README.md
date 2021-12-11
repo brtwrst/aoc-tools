@@ -1,4 +1,18 @@
-# aoc-tools
+# Advent Of Code Tools
+
+Collection of tools for solving [Advent of Code](https://adventofcode.com) puzzles in python
+
+* [Installation](#installation)
+*  [Usage](#usage)
+    * [Parsing Input](#parsing-input)
+    * [Submitting Output](#submitting-output)
+    * [Using example input](#using-example-input)
+* [Tools](#tools)
+    * [Fast primality checks](#fast-primality-checks)
+    * [Matrix manipulation functions ](#matrix-manipulation-functions)
+    * [Template file generation](#template-file-generation)
+* [Simple vector](#simple-vector)
+    * [Supported operations](#supported-operations)
 
 ## Installation
 
@@ -34,7 +48,7 @@ aocd = AOCD(2021, 1)
 This Class will pull your input and submit your solutions.  
 This will ask you for your AOC session-cookie on the first run. The cookie can be found in the chrome dev tools while you are logged in to adventofcode.com (Application -> Cookies)
 
-### Input
+### Parsing Input
 
 * string / number parsing
     * Example Input  
@@ -157,7 +171,7 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             ```
 
 
-### Output/Submission
+### Submitting Output
 
 * `aocd.p1` submit answer for part 1
 * `aocd.p2` submit answer for part 2
