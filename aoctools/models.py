@@ -77,7 +77,6 @@ class AOCD():
                 return self.str.split(',')
             # Add more separators here if they come up
 
-
     @property
     def ilist(self):
         return [int(x) for x in self.slist]
@@ -94,6 +93,22 @@ class AOCD():
         ret = set(self.ilist)
         if len(ret) < len(self):
             print('Warning - set is smaller than list because of duplicate entries')
+        return ret
+
+    @property
+    def sgrid(self):
+        ret = dict()
+        for y in range(len(self.slist)):
+            for x in range(len(self.slist[0])):
+                ret[x, y] = self.slist[y][x]
+        return ret
+
+    @property
+    def igrid(self):
+        ret = dict()
+        for y in range(len(self.slist)):
+            for x in range(len(self.slist[0])):
+                ret[x, y] = int(self.slist[y][x])
         return ret
 
     def __submit(self, part, answer):
