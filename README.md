@@ -57,11 +57,11 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ```
     * `aocd.int` parse input as single int
         *   ```py
-            -> 1234
+            aocd.int -> 1234
             ```
     * `aocd.str` parse input as single str
         *   ```py
-            -> '1234'
+            aocd.str -> '1234'
             ```
 * List Parsing (split at newline)
     * Example Input  
@@ -71,11 +71,11 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ```
     * `aocd.ilist` parse input as list of int (split at newline)
         *   ```py
-            [12, 34]
+            aocd.ilist -> [12, 34]
             ```
     * `aocd.slist` parse input as list of str (split at newline)
         *   ```py
-            ['12', '34']
+            aocd.slist -> ['12', '34']
             ```
 * List Parsing (split at arbitrary separator)
     * Example Input  
@@ -99,11 +99,11 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ```
     * `aocd.iset` parse input as set of int
         *   ```py
-            {12, 34}
+            aocd.iset -> {12, 34}
             ```
     * `aocd.sset` parse input as set of str
         *   ```py
-            {'12', '34'}
+            aocd.sset -> {'12', '34'}
             ```
 * Set Parsing (split at arbitrary separator)
     * Example Input  
@@ -127,6 +127,7 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ```
     * `aocd.igrid` parse input as a grid of single digit numbers (split input at newline)
         *   ```py
+            aocd.igrid ->
             {
                 (0,0) : 1, 
                 (1,0) : 2, 
@@ -136,6 +137,7 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             ```
     * `aocd.sgrid` parse input as a grid of single characters (split input at newline)
         *   ```py
+            aocd.sgrid ->
             {
                 (0,0) : '1', 
                 (1,0) : '2', 
