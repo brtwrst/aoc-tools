@@ -55,13 +55,13 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ```
         1234
         ```
-    * `aocd.int` parse input as single int
+    * `aocd.as_int` parse input as single int
         *   ```py
-            aocd.int -> 1234
+            aocd.as_int -> 1234
             ```
-    * `aocd.str` parse input as single str
+    * `aocd.as_str` parse input as single str
         *   ```py
-            aocd.str -> '1234'
+            aocd.as_str -> '1234'
             ```
 * List Parsing (split at newline)
     * Example Input  
@@ -172,6 +172,20 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             }
             ```
 
+* Dict (when input is formatted as a line of key value pairs)
+    * Example Input  
+        ```
+        ab-cd
+        de-fg
+        ```
+    * `aocd.dict_split_at(sep, keytype, valuetype)` parse input as lines of key-value pairs with specific types
+        *   ```py
+            aocd.dict_split_at('-') ->
+            {
+                'ab': 'cd', 
+                'de': 'fg'
+            }
+            ```
 
 ### Submitting Output
 

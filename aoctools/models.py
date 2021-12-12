@@ -63,26 +63,26 @@ class AOCD():
         return f'{self.puzzle_url}/answer'
 
     @property
-    def str(self):
+    def as_str(self):
         return self.raw.strip()
 
     @property
-    def int(self):
-        return int(self.str)
+    def as_int(self):
+        return int(self.as_str)
 
     # -----------------------------------------
     # List Parsing
     # -----------------------------------------
     @property
     def slist(self):
-        return self.str.split('\n')
+        return self.as_str.split('\n')
 
     @property
     def ilist(self):
         return [int(x) for x in self.slist]
 
     def slist_split_at(self, sep):
-        return self.str.split(sep)
+        return self.as_str.split(sep)
 
     def ilist_split_at(self, sep):
         return [int(x) for x in self.slist_split_at(sep)]
@@ -143,6 +143,17 @@ class AOCD():
             for x, element in enumerate(line):
                 grid[x, y] = t(element)
         return grid
+
+    # -----------------------------------------
+    # Dict Parsing
+    # -----------------------------------------
+    def dict_split_at(self, sep, keytype=str, valuetype=str):
+        d = dict()
+        for line in self.slist:
+            k, v = line.split(sep)
+            print(k, v)
+            d[keytype(k)] = valuetype(v)
+        return d
 
     # -----------------------------------------
     # Submitting answer
