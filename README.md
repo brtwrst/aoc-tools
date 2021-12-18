@@ -178,13 +178,28 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ab-cd
         de-fg
         ```
-    * `aocd.dict_split_at(sep, keytype, valuetype)` parse input as lines of key-value pairs with specific types
+    * `aocd.dict_split_at(sep, keytype, valuetype)` parse input as lines of key-value pairs with specific types (default str)
         *   ```py
             aocd.dict_split_at('-') ->
             {
                 'ab': 'cd', 
                 'de': 'fg'
             }
+            ```
+
+* Eval Parsing (when input is formatted as lines of valid python objects(lists, sets, dicts))
+    * Example Input  
+        ```
+        [1,2]
+        [3,4]
+        ```
+    * `aocd.eval_list` parse input as lines of python objects
+        *   ```py
+            aocd.eval_list ->
+            [
+                [1,2],
+                [3,4]
+            ]
             ```
 
 ### Submitting Output
