@@ -1,5 +1,6 @@
 import webbrowser
 import requests
+from ast import literal_eval
 from .localstorage import Cache, Cookie
 from .tools import parse_website
 
@@ -154,6 +155,13 @@ class AOCD():
             print(k, v)
             d[keytype(k)] = valuetype(v)
         return d
+
+    # -----------------------------------------
+    # Eval Parsing
+    # -----------------------------------------
+    @property
+    def eval_list(self):
+        return [literal_eval(x) for x in self.as_str.split('\n')]
 
     # -----------------------------------------
     # Submitting answer
