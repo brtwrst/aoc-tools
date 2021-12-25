@@ -138,12 +138,18 @@ class AOCD():
         grid = dict()
         for y, line in enumerate(self.slist):
             if sep is None:
-                line = list(line)
+                pass
             else:
                 line = line.split(sep)
             for x, element in enumerate(line):
                 grid[x, y] = t(element)
         return grid
+
+    def print_grid(self, grid):
+        for y in range(max((p[1] for p in grid))+1):
+            for x in range(max((p[0] for p in grid))+1):
+                print(grid[x,y], end='')
+            print()
 
     # -----------------------------------------
     # Dict Parsing
