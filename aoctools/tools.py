@@ -42,7 +42,8 @@ def create_py_files(year):
     if confirm not in 'yY':
         return False
 
-    year_folder.mkdir()
+    if not year_folder.exists:
+        year_folder.mkdir()
 
     for day in range(1, 26):
         with open(year_folder / f'{day}.py', 'w') as f:
