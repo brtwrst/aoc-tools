@@ -3,14 +3,14 @@
 Collection of tools for solving [Advent of Code](https://adventofcode.com) puzzles in python
 
 * [Installation](#installation)
-*  [Usage](#usage)
+* [Template file generation](#template-file-generation)
+* [Usage](#usage)
     * [Parsing Input](#parsing-input)
     * [Submitting Output](#submitting-output)
     * [Using example input](#using-example-input)
 * [Tools](#tools)
     * [Fast primality checks](#fast-primality-checks)
     * [Matrix manipulation functions ](#matrix-manipulation-functions)
-    * [Template file generation](#template-file-generation)
 * [Simple vector](#simple-vector)
     * [Supported operations](#supported-operations)
 
@@ -25,6 +25,11 @@ pip install -e .
 or
 pip install -e --user .
 ```
+
+## Template file generation
+* This will create 25 template files (1 for each day) in a Subfolder for a given year.  
+* Can be run anywhere once installed: `python -m aoctools.create <year>` 
+
 
 ## Usage
 
@@ -224,6 +229,7 @@ aocd.set_example("""00100
 00010
 01010""")
 
+# Parse after setting example input
 inp = aocd.slist
 ```
 
@@ -379,11 +385,6 @@ rotated_matrix_dicts = [
 '''
 ```
 
-### Template file generation
-`create_py_files(year)`
-* This will create 25 template files (1 for each day) for a given year of AOC.  
-* Can be run anywhere once installed: `python -m aoctools.tools <year>` 
-
 ## Simple vector
 
 ```python
@@ -400,7 +401,17 @@ v = Vec(1,2,3)
 * Subtraction `Vec(1,2,3) - Vec(1,2,3)`
 * Vector Multiplication `Vec(1,2,3) * Vec(2,3,4)`
 * Scalar Multiplication `Vec(1,2,3) * 2`
+* Scalar Division/Floor Division `Vec(1,2,3) / 2` `Vec(1,2,3) // 2`
+* Cross Product `Vec(1,2,3) @ Vec(1,1,1)` or `Vec(1,2,3).cross_product(Vec(1,1,1))`
+* Modulo each element `Vec(1,2,3) % 2`
+* Exponentiate each element `Vec(1,2,3) ** 2`
+* Left-Shift each element `Vec(1,2,3) << 2`
+* Right-Shift each element `Vec(1,2,3) >> 2`
+* Bitwise-And each element `Vec(1,2,3) & 2`
+* Bitwise-XOr each element `Vec(1,2,3) ^ 2`
+* Bitwise-Or each element `Vec(1,2,3) | 2`
 * Comparison `< > == != <= >=`
 * Length/Absolute `abs(Vec(1,2,3))` (will give the vector magnitude)
 * element access `Vec(1,2,3)[0]` (also assignment `Vec(1,2,3)[2] = 2`)
 * count occurances of specific element `Vec(1,2,3).count(0)` (Number of 0s in the vector)
+* Rotate vector by a Matrix (Matrix is a list of Vec, each Vec represents one **row** of the matrix) `Vec(1,2,3).rotate_with_matrix([Vec(0,1,0),Vec(0,0,1),Vec(1,0,0)])`

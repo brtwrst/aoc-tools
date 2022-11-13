@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="aoc-tools-brtwrst",
-    version="0.0.1",
+    version="0.1.0",
     author="brtwrst",
     author_email="brtwrst@outlook.com",
     description="Advent of Code tools",
@@ -18,7 +18,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.9',
+    python_requires='>=3.10',
     install_requires=[
         'requests',
     ]
