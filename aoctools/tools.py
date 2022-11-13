@@ -52,6 +52,7 @@ from aoctools import *
 
 
 def main(aocd: AOCD):
+    # aocd.set_example("""""")
     pass
 
 
