@@ -163,11 +163,15 @@ class AOCD():
         return d
 
     # -----------------------------------------
-    # Eval Parsing
+    # Literal Parsing
     # -----------------------------------------
     @property
-    def eval_list(self):
-        return [literal_eval(x) for x in self.as_str.split('\n')]
+    def literal(self):
+        return literal_eval(self.as_str)
+
+    @property
+    def literal_list(self):
+        return [literal_eval(x) for x in self.slist]
 
     # -----------------------------------------
     # Submitting answer

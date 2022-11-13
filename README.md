@@ -177,7 +177,7 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             }
             ```
 
-* Dict (when input is formatted as a line of key value pairs)
+* Dict (when input is formatted as lines of key value pairs)
     * Example Input  
         ```
         ab-cd
@@ -192,15 +192,32 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             }
             ```
 
-* Eval Parsing (when input is formatted as lines of valid python objects(lists, sets, dicts))
+* Literal Parsing (when input is formatted as a valid python object (list, set, dict))
+    * Example Input  
+        ```
+        {
+            a:1,
+            b:2
+        }
+        ```
+    * `aocd.literal` parse input as python object
+        *   ```py
+            aocd.literal ->
+            {
+                a:1,
+                b:2
+            }
+            ```
+
+* Literal List Parsing (when input is formatted as lines of valid python objects(lists, sets, dicts))
     * Example Input  
         ```
         [1,2]
         [3,4]
         ```
-    * `aocd.eval_list` parse input as lines of python objects
+    * `aocd.literal_list` parse input as lines of python objects
         *   ```py
-            aocd.eval_list ->
+            aocd.literal_list ->
             [
                 [1,2],
                 [3,4]
