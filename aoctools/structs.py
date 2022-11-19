@@ -1,6 +1,11 @@
+from collections.abc import Iterable
+
 class Vec():
     def __init__(self, *args, mutable=False):
-        self.values = list(args) if mutable else args
+        if isinstance(args[0], Iterable):
+            self.values = list(*args) if mutable else tuple(*args)
+        else:
+            self.values = list(args) if mutable else args
 
     def __len__(self):
         return len(self.values)
@@ -125,6 +130,8 @@ class Vec():
         return self.values[key]
 
     def __setitem__(self, key, value):
+        if isinstance(self.values, tuple):
+            raise TypeError('Vector is not mutable')
         self.values[key] = value
 
     def count(self, obj):
