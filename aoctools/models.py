@@ -134,21 +134,28 @@ class AOCD():
     def igrid_split_at(self, sep):
         return self.__parse_as_grid(sep=sep, t=int)
 
-    def __parse_as_grid(self, sep=None, t=str):
+    def mgrid(self, mapping):
+        return self.__parse_as_grid(sep=None, mapping=mapping)
+
+    def mgrid_split_at(self, mapping, sep):
+        return self.__parse_as_grid(sep=sep, mapping=mapping)
+
+    def __parse_as_grid(self, sep=None, t=str, mapping=None):
         grid = dict()
         for y, line in enumerate(self.slist):
-            if sep is None:
-                pass
-            else:
+            if sep is not None:
                 line = line.split(sep)
             for x, element in enumerate(line):
-                grid[x, y] = t(element)
+                if mapping:
+                    grid[x, y] = mapping.get(element, element)
+                else:
+                    grid[x, y] = t(element)
         return grid
 
-    def print_grid(self, grid):
+    def print_grid(self, grid, mapping=dict()):
         for y in range(max((p[1] for p in grid))+1):
             for x in range(max((p[0] for p in grid))+1):
-                print(grid[x,y], end='')
+                print(mapping.get(grid[x,y], grid[x,y]), end='')
             print()
 
     # -----------------------------------------

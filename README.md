@@ -6,6 +6,16 @@ Collection of tools for solving [Advent of Code](https://adventofcode.com) puzzl
 * [Template file generation](#template-file-generation)
 * [Usage](#usage)
     * [Parsing Input](#parsing-input)
+        * [String / Number](#string--number-parsing)
+        * [List (split at newline)](#list-parsing-split-at-newline)
+        * [List (split at arbitryry character)](#list-parsing-split-at-arbitrary-separator)
+        * [Set (split at newline)](#set-parsing-split-at-newline)
+        * [Set (split at arbitryry character)](#set-parsing-split-at-arbitrary-separator)
+        * [Grid of single characters](#grid-parsing-when-input-is-formatted-as-a-grid-of-single-digitscharacters)
+        * [Grid of separated characters](#grid-parsing-when-input-is-formatted-as-a-grid-of-separated-values-on-each-line)
+        * [Dict (key value pairs)](#dict-parsing-when-input-is-formatted-as-lines-of-key-value-pairs)
+        * [Literal](#literal-parsing-when-input-is-formatted-as-a-valid-python-object-list-set-dict)
+        * [Literal List](#literal-list-parsing-when-input-is-formatted-as-lines-of-valid-python-objectslists-sets-dicts)
     * [Submitting Output](#submitting-output)
     * [Using example input](#using-example-input)
 * [Tools](#tools)
@@ -55,174 +65,195 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
 
 ### Parsing Input
 
-* string / number parsing
-    * Example Input  
+#### string / number parsing
+* Example Input  
+    ```
+    1234
+    ```
+* `aocd.as_int` parse input as single int
+    *   ```py
+        aocd.as_int -> 1234
         ```
-        1234
+* `aocd.as_str` parse input as single str
+    *   ```py
+        aocd.as_str -> '1234'
         ```
-    * `aocd.as_int` parse input as single int
-        *   ```py
-            aocd.as_int -> 1234
-            ```
-    * `aocd.as_str` parse input as single str
-        *   ```py
-            aocd.as_str -> '1234'
-            ```
-* List Parsing (split at newline)
-    * Example Input  
+#### List Parsing (split at newline)
+* Example Input  
+    ```
+    12
+    34
+    ```
+* `aocd.ilist` parse input as list of int (split at newline)
+    *   ```py
+        aocd.ilist -> [12, 34]
         ```
-        12
-        34
+* `aocd.slist` parse input as list of str (split at newline)
+    *   ```py
+        aocd.slist -> ['12', '34']
         ```
-    * `aocd.ilist` parse input as list of int (split at newline)
-        *   ```py
-            aocd.ilist -> [12, 34]
-            ```
-    * `aocd.slist` parse input as list of str (split at newline)
-        *   ```py
-            aocd.slist -> ['12', '34']
-            ```
-* List Parsing (split at arbitrary separator)
-    * Example Input  
+#### List Parsing (split at arbitrary separator)
+* Example Input  
+    ```
+    1;2;3;4
+    ```
+* `aocd.ilist_split_at(sep)` parse input as list of int (split at sep)
+    *   ```py
+        aocd.ilist_split_at(';') -> [1,2,3,4]
         ```
-        1;2;3;4
+* `aocd.slist_split_at(sep)` parse input as list of str (split at sep)
+    *   ```py
+        aocd.slist_split_at(';') -> ['1','2','3','4']
         ```
-    * `aocd.ilist_split_at(sep)` parse input as list of int (split at sep)
-        *   ```py
-            aocd.ilist_split_at(';') -> [1,2,3,4]
-            ```
-    * `aocd.slist_split_at(sep)` parse input as list of str (split at sep)
-        *   ```py
-            aocd.slist_split_at(';') -> ['1','2','3','4']
-            ```
 
-* Set Parsing (split at newline)
-    * Example Input  
+#### Set Parsing (split at newline)
+* Example Input  
+    ```
+    12
+    34
+    ```
+* `aocd.iset` parse input as set of int
+    *   ```py
+        aocd.iset -> {12, 34}
         ```
-        12
-        34
+* `aocd.sset` parse input as set of str
+    *   ```py
+        aocd.sset -> {'12', '34'}
         ```
-    * `aocd.iset` parse input as set of int
-        *   ```py
-            aocd.iset -> {12, 34}
-            ```
-    * `aocd.sset` parse input as set of str
-        *   ```py
-            aocd.sset -> {'12', '34'}
-            ```
-* Set Parsing (split at arbitrary separator)
-    * Example Input  
+#### Set Parsing (split at arbitrary separator)
+* Example Input  
+    ```
+    1;2;3;4;4
+    ```
+* `aocd.ilist_split_at(sep)` parse input as list of int (split at sep)
+    *   ```py
+        aocd.iset_split_at(';') -> {1,2,3,4}
         ```
-        1;2;3;4;4
+* `aocd.slist_split_at(sep)` parse input as list of str (split at sep)
+    *   ```py
+        aocd.sset_split_at(';') -> {'1','2','3','4'}]
         ```
-    * `aocd.ilist_split_at(sep)` parse input as list of int (split at sep)
-        *   ```py
-            aocd.iset_split_at(';') -> {1,2,3,4}
-            ```
-    * `aocd.slist_split_at(sep)` parse input as list of str (split at sep)
-        *   ```py
-            aocd.sset_split_at(';') -> {'1','2','3','4'}]
-            ```
 
-* Grid Parsing (when input is formatted as a grid of single digits/characters)
-    * Example Input  
+#### Grid Parsing (when input is formatted as a grid of single digits/characters)
+* Example Input  
+    ```
+    12
+    34
+    ```
+* `aocd.igrid` parse input as a grid of single digit numbers (split input at newline)
+    *   ```py
+        aocd.igrid ->
+        {
+            (0,0) : 1, 
+            (1,0) : 2, 
+            (0,1) : 3, 
+            (1,1) : 4, 
+        }
         ```
-        12
-        34
+* `aocd.sgrid` parse input as a grid of single characters (split input at newline)
+    *   ```py
+        aocd.sgrid ->
+        {
+            (0,0) : '1', 
+            (1,0) : '2', 
+            (0,1) : '3', 
+            (1,1) : '4', 
+        }
         ```
-    * `aocd.igrid` parse input as a grid of single digit numbers (split input at newline)
-        *   ```py
-            aocd.igrid ->
-            {
-                (0,0) : 1, 
-                (1,0) : 2, 
-                (0,1) : 3, 
-                (1,1) : 4, 
-            }
-            ```
-    * `aocd.sgrid` parse input as a grid of single characters (split input at newline)
-        *   ```py
-            aocd.sgrid ->
-            {
-                (0,0) : '1', 
-                (1,0) : '2', 
-                (0,1) : '3', 
-                (1,1) : '4', 
-            }
-            ```
-* Grid Parsing (when input is formatted as a grid of separated values on each line)
-    * Example Input  
+* `aocd.mgrid(mapping)` parse input as a grid of single characters but map them to a new value in the dict
+    *   ```py
+        aocd.mgrid(mapping={'1': 'FOO', '2':'BAR'}) ->
+        {
+            (0,0) : 'FOO', 
+            (1,0) : 'BAR', 
+            (0,1) : '3', 
+            (1,1) : '4', 
+        }
         ```
-        1,2
-        3,4
-        ```
-    * `aocd.igrid_split_at(sep)` parse input as a grid of integers (split input at newline) (split line at sep)
-        *   ```py
-            aocd.igrid_split_at(',') ->
-            {
-                (0,0) : 1, 
-                (1,0) : 2, 
-                (0,1) : 3, 
-                (1,1) : 4, 
-            }
-            ```
-    * `aocd.sgrid_split_at(sep)` parse input as a grid of strings (split input at newline) (split line at sep)
-        *   ```py
-            aocd.sgrid_split_at(',') ->
-            {
-                (0,0) : '1', 
-                (1,0) : '2', 
-                (0,1) : '3', 
-                (1,1) : '4', 
-            }
-            ```
 
-* Dict (when input is formatted as lines of key value pairs)
-    * Example Input  
+#### Grid Parsing (when input is formatted as a grid of separated values on each line)
+* Example Input  
+    ```
+    1,2
+    3,4
+    ```
+* `aocd.igrid_split_at(sep)` parse input as a grid of integers (split input at newline) (split line at sep)
+    *   ```py
+        aocd.igrid_split_at(',') ->
+        {
+            (0,0) : 1, 
+            (1,0) : 2, 
+            (0,1) : 3, 
+            (1,1) : 4, 
+        }
         ```
-        ab-cd
-        de-fg
+* `aocd.sgrid_split_at(sep)` parse input as a grid of strings (split input at newline) (split line at sep)
+    *   ```py
+        aocd.sgrid_split_at(',') ->
+        {
+            (0,0) : '1', 
+            (1,0) : '2', 
+            (0,1) : '3', 
+            (1,1) : '4', 
+        }
         ```
-    * `aocd.dict_split_at(sep, keytype, valuetype)` parse input as lines of key-value pairs with specific types (default str)
-        *   ```py
-            aocd.dict_split_at('-') ->
-            {
-                'ab': 'cd', 
-                'de': 'fg'
-            }
-            ```
+* `aocd.mgrid_split_at(mapping, sep)` parse input as a grid of single characters but map them to a new value in the dict
+    *   ```py
+        aocd.mgrid(mapping={'1': 'FOO', '2':'BAR'}, sep=',') ->
+        {
+            (0,0) : 'FOO', 
+            (1,0) : 'BAR', 
+            (0,1) : '3', 
+            (1,1) : '4', 
+        }
+        ```
 
-* Literal Parsing (when input is formatted as a valid python object (list, set, dict))
-    * Example Input  
+#### Dict Parsing (when input is formatted as lines of key value pairs)
+* Example Input  
+    ```
+    ab-cd
+    de-fg
+    ```
+* `aocd.dict_split_at(sep, keytype, valuetype)` parse input as lines of key-value pairs with specific types (default str)
+    *   ```py
+        aocd.dict_split_at('-') ->
+        {
+            'ab': 'cd', 
+            'de': 'fg'
+        }
         ```
+
+#### Literal Parsing (when input is formatted as a valid python object (list, set, dict))
+* Example Input  
+    ```
+    {
+        a:1,
+        b:2
+    }
+    ```
+* `aocd.literal` parse input as python object
+    *   ```py
+        aocd.literal ->
         {
             a:1,
             b:2
         }
         ```
-    * `aocd.literal` parse input as python object
-        *   ```py
-            aocd.literal ->
-            {
-                a:1,
-                b:2
-            }
-            ```
 
-* Literal List Parsing (when input is formatted as lines of valid python objects(lists, sets, dicts))
-    * Example Input  
+#### Literal List Parsing (when input is formatted as lines of valid python objects(lists, sets, dicts))
+* Example Input  
+    ```
+    [1,2]
+    [3,4]
+    ```
+* `aocd.literal_list` parse input as lines of python objects
+    *   ```py
+        aocd.literal_list ->
+        [
+            [1,2],
+            [3,4]
+        ]
         ```
-        [1,2]
-        [3,4]
-        ```
-    * `aocd.literal_list` parse input as lines of python objects
-        *   ```py
-            aocd.literal_list ->
-            [
-                [1,2],
-                [3,4]
-            ]
-            ```
 
 ### Submitting Output
 
