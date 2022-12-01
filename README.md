@@ -13,7 +13,7 @@ Collection of tools for solving [Advent of Code](https://adventofcode.com) puzzl
         * [Set (split at arbitryry character)](#set-parsing-split-at-arbitrary-separator)
         * [Grid of single characters](#grid-parsing-when-input-is-formatted-as-a-grid-of-single-digitscharacters)
         * [Grid of separated characters](#grid-parsing-when-input-is-formatted-as-a-grid-of-separated-values-on-each-line)
-        * [Dict (key value pairs)](#dict-parsing-when-input-is-formatted-as-lines-of-key-value-pairs)
+        * [Key-Value pairs](#key-value-parsing-when-input-is-formatted-as-lines-of-key-value-pairs)
         * [Literal](#literal-parsing-when-input-is-formatted-as-a-valid-python-object-list-set-dict)
         * [Literal List](#literal-list-parsing-when-input-is-formatted-as-lines-of-valid-python-objectslists-sets-dicts)
     * [Submitting Output](#submitting-output)
@@ -36,13 +36,12 @@ or
 pip install -e --user .
 ```
 
-## Template file generation
-* This will create 25 template files (1 for each day) in a Subfolder for a given year.  
-* Can be run anywhere once installed: `python -m aoctools.create <year>` 
-
+## Template file generation 
+* Can be run anywhere once installed with: `python -m aoctools.create <year>` 
+* This will create 25 template files (1 for each day) in a Subfolder for a given year. 
+* You will be asked if you want to add optional timing code
 
 ## Usage
-
 ```python
 from aoctools import *
 aocd = AOCD(2021, 1)
@@ -208,13 +207,13 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         }
         ```
 
-#### Dict Parsing (when input is formatted as lines of key value pairs)
+#### Key-Value Parsing (when input is formatted as lines of key value pairs)
 * Example Input  
     ```
     ab-cd
     de-fg
     ```
-* `aocd.dict_split_at(sep, keytype, valuetype)` parse input as lines of key-value pairs with specific types (default str)
+* `aocd.key_value_split_at(sep, keytype=str, valuetype=str)` parse input as lines of key-value pairs with specific types (default str)
     *   ```py
         aocd.dict_split_at('-') ->
         {
@@ -257,8 +256,8 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
 
 ### Submitting Output
 
-* `aocd.p1` submit answer for part 1
-* `aocd.p2` submit answer for part 2
+* `aocd.p1(answer)` submit answer for part 1
+* `aocd.p2(answer)` submit answer for part 2
 
 ### Using example input
 Give the example input verbatim as multiline string to `AOCD.set_example(<input>)` before parsing. The following example uses the input of https://adventofcode.com/2021/day/3

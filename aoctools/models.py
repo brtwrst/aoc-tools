@@ -159,9 +159,16 @@ class AOCD():
             print()
 
     # -----------------------------------------
-    # Dict Parsing
+    # Key-Value Parsing
     # -----------------------------------------
     def dict_split_at(self, sep, keytype=str, valuetype=str):
+        # deprecated alias for key_value_split_at
+        return self.key_value_split_at(sep, keytype, valuetype)
+
+    def key_value_split_at(self, sep, keytype=str, valuetype=str):
+        return self.__parse_as_key_value(sep, keytype, valuetype)
+
+    def __parse_as_key_value(self, sep, keytype=str, valuetype=str):
         d = dict()
         for line in self.slist:
             k, v = line.split(sep)
