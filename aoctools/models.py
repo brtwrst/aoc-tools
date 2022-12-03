@@ -2,7 +2,7 @@ import webbrowser
 from ast import literal_eval
 import requests
 from .localstorage import Cache, Cookie
-from .plumbing import parse_website
+from .plumbing import parse_result_website, parse_solution_from_website
 
 
 class AOCD():
@@ -155,7 +155,7 @@ class AOCD():
     def print_grid(self, grid, mapping=dict()):
         for y in range(max((p[1] for p in grid))+1):
             for x in range(max((p[0] for p in grid))+1):
-                print(mapping.get(grid[x,y], grid[x,y]), end='')
+                print(mapping.get(grid[x, y], grid[x, y]), end='')
             print()
 
     # -----------------------------------------
@@ -199,6 +199,10 @@ class AOCD():
         else:
             print(f'Submitting answer "{answer}" for {self.year}-{self.day} Part {part}')
 
+        if (sol := self.cache.solution(part)) is not None:
+            print('SOLUTION CACHED\nYour answer is', 'correct' if answer == sol else 'incorrect')
+            return False
+
         if answer in self.cache.answers(part):
             print('SKIPPED: Already submitted earlier')
             return False
@@ -207,15 +211,32 @@ class AOCD():
             url=self.answer_url,
             headers={
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'origin': AOCD.base_url,
+                'origin': self.base_url,
                 'referer': self.puzzle_url
             },
             data={'level': part, 'answer': answer},
             cookies={'session': self.cookie}
         )
-        parsed = parse_website(r.text)
-        print(parsed or r.text)
-        if isinstance(parsed, str) and not parsed.startswith('ERROR:'):
+        parsed_result = parse_result_website(r.text)
+        print(parsed_result or r.text)
+        if not isinstance(parsed_result, str):
+            print('Invalid parsing result')
+            return False
+        elif parsed_result == 'ALREADY SOLVED':
+            print('Collecting correct answer from website')
+            puzzle_page = requests.get(
+                url=self.puzzle_url,
+                cookies={'session': self.cookie}
+            )
+            sol = parse_solution_from_website(puzzle_page.text, part)
+            if sol is None:
+                print('Cannot read Solution from puzzle page')
+                return None
+            self.cache.add_answer(part, sol, is_solution=True)
+            print('Your answer is', 'correct' if answer == sol else 'incorrect')
+        elif parsed_result.startswith('SUCCESS'):
+            self.cache.add_answer(part, answer, is_solution=True)
+        elif not parsed_result.startswith('ERROR:'):
             self.cache.add_answer(part, answer)
 
     def p1(self, answer):

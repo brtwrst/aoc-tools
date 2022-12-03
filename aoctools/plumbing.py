@@ -1,10 +1,10 @@
 import re
 
-re_main = re.compile(r'(?s)<main>\n<article><p>(.*)</p></article>\n</main>')
 
-def parse_website(raw):
+def parse_result_website(raw):
     if not raw.startswith('<!DOCTYPE html>'):
         return 'ERROR: No HTML Received'
+    re_main = re.compile(r'(?s)<main>\n<article><p>(.*)</p></article>\n</main>')
     main_part = re_main.search(raw)
 
     if not main_part:
@@ -25,6 +25,18 @@ def parse_website(raw):
         return 'WRONG ANSWER:' + (f' - Too {reason.group(1)}' if reason else '')
 
     if main_text.startswith("You don't seem to be solving the right level"):
-        return 'ERROR: Already solved'
+        return 'ALREADY SOLVED'
 
     return None
+
+
+def parse_solution_from_website(raw, part):
+    if not raw.startswith('<!DOCTYPE html>'):
+        print('No HTML Received')
+        return None
+    re_answer = re.compile(r'<p>Your puzzle answer was <code>(.*)</code>.</p>')
+    answers = re_answer.findall(raw)
+    if len(answers) < part:
+        print('Unable to find solution for part', part, 'on Website')
+        return None
+    return answers[part-1]

@@ -98,21 +98,32 @@ class Cache:
             parts = f.read().split('---')
         if len(parts) != 2:
             self.delete_files()
-            raise AssertionError('Cache file invalid - please try again')
+            print('Cache file invalid - deleting old cache file')
+            return set()
         if not parts[part-1]:
             return set()
         return set(parts[part-1].strip().split('\n'))
 
-    def add_answer(self, part, answer):
+    def add_answer(self, part, answer, is_solution=False):
         if not self.answers_path.is_file():
             with open(self.answers_path, 'w') as f:
                 f.write('---')
         parts = [self.answers(1), self.answers(2)]
-        parts[part-1].add(str(answer))
+        if is_solution:
+            parts[part-1] = [f'S:{answer}']
+        else:
+            parts[part-1].add(str(answer))
         with open(self.answers_path, 'w') as f:
             f.write('\n'.join(parts[0]))
             f.write('\n---\n')
             f.write('\n'.join(parts[1]).strip())
+
+    def solution(self, part):
+        answers = list(self.answers(part))
+        if len(answers) == 1 and answers[0].startswith('S:'):
+            return answers[0][2:]
+        else:
+            return None
 
     def delete_files(self):
         self.answers_path.unlink()
