@@ -57,7 +57,7 @@ class Cache:
         self.year = year
         self.day = day
         if delete_cache:
-            self.delete_cache()
+            self.delete_files()
 
     @property
     def folder(self):
@@ -68,6 +68,7 @@ class Cache:
 
         return cache_folder
 
+    # Input
     @property
     def input_path(self):
         return self.folder / f'{self.year}-{self.day}-input.txt'
@@ -85,22 +86,34 @@ class Cache:
         with open(self.input_path, 'w') as f:
             f.write(raw)
 
+    # Answers
     @property
     def answers_path(self):
         return self.folder / f'{self.year}-{self.day}-answers.txt'
 
-    @property
-    def answers(self):
+    def answers(self, part):
         if not self.answers_path.is_file():
             return set()
         with open(self.answers_path) as f:
-            answers = f.read().strip().split('\n')
-        return set(answers)
+            parts = f.read().split('---')
+        if len(parts) != 2:
+            self.delete_files()
+            raise AssertionError('Cache file invalid - please try again')
+        if not parts[part-1]:
+            return set()
+        return set(parts[part-1].strip().split('\n'))
 
-    def add_answer(self, answer):
-        with open(self.answers_path, 'a') as f:
-            f.write(str(answer) + '\n')
+    def add_answer(self, part, answer):
+        if not self.answers_path.is_file():
+            with open(self.answers_path, 'w') as f:
+                f.write('---')
+        parts = [self.answers(1), self.answers(2)]
+        parts[part-1].add(str(answer))
+        with open(self.answers_path, 'w') as f:
+            f.write('\n'.join(parts[0]))
+            f.write('\n---\n')
+            f.write('\n'.join(parts[1]).strip())
 
-    def delete_cache(self):
+    def delete_files(self):
         self.answers_path.unlink()
         self.input_path.unlink()

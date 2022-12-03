@@ -1,6 +1,6 @@
 import webbrowser
-import requests
 from ast import literal_eval
+import requests
 from .localstorage import Cache, Cookie
 from .plumbing import parse_website
 
@@ -199,7 +199,7 @@ class AOCD():
         else:
             print(f'Submitting answer "{answer}" for {self.year}-{self.day} Part {part}')
 
-        if answer in self.cache.answers:
+        if answer in self.cache.answers(part):
             print('SKIPPED: Already submitted earlier')
             return False
 
@@ -214,9 +214,9 @@ class AOCD():
             cookies={'session': self.cookie}
         )
         parsed = parse_website(r.text)
-        print(parse_website(r.text) or r.text)
+        print(parsed or r.text)
         if isinstance(parsed, str) and not parsed.startswith('ERROR:'):
-            self.cache.add_answer(answer)
+            self.cache.add_answer(part, answer)
 
     def p1(self, answer):
         self.__submit(part=1, answer=answer)
