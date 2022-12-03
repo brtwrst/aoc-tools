@@ -41,11 +41,11 @@ pip install -e --user .
 * This will create 25 template files (1 for each day) in a Subfolder for a given year. 
 * You will be asked if you want to add optional timing code
 
-## Usage
+## Usage example
 ```python
 from aoctools import *
 aocd = AOCD(2021, 1)
-puzzle_input = aocd.ilist
+puzzle_input = aocd.as_str
 # calculate the answers
 aocd.p1('<answer to part 1>')
 aocd.p2('<answer to part 2>')
