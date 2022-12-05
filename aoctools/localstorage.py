@@ -126,5 +126,7 @@ class Cache:
             return None
 
     def delete_files(self):
-        self.answers_path.unlink()
-        self.input_path.unlink()
+        if self.answers_path.exists():
+            self.answers_path.unlink()
+        if self.input_path.exists():
+            self.input_path.unlink()
