@@ -65,7 +65,7 @@ class AOCD():
 
     @property
     def as_str(self):
-        return self.raw.strip()
+        return self.raw.rstrip('\n')
 
     @property
     def as_int(self):
