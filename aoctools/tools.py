@@ -1,4 +1,5 @@
 from random import randrange
+from collections import deque
 
 def miller_rabin(n):
     def miller_rabin_check(n, a):
@@ -73,3 +74,31 @@ def matrix_rotate_dicts(matrix):
     matrix = [list(r.items()) for r in matrix]
     matrix = matrix_rotate(matrix)
     return [dict(r) for r in matrix]
+
+def bfs(start, goal, findNeighbors):
+    closedSet = set()
+    openSet = deque([start])
+    cameFrom = {}
+
+    while openSet:
+        current = openSet.popleft()
+
+        if current == goal:
+            total_path = [current]
+            while current in cameFrom.keys():
+                current = cameFrom[current]
+                total_path.append(current)
+            return total_path
+
+        for neighbor in findNeighbors(current):
+            if neighbor in closedSet:
+                continue
+
+            if neighbor not in openSet:
+                openSet.append(neighbor)
+
+            cameFrom[neighbor] = current
+
+        closedSet.add(current)
+
+    return False
