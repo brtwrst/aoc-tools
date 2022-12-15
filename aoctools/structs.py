@@ -147,3 +147,7 @@ class Vec():
 
     def cross_product(self, other):
         return self@other
+
+    @property
+    def manhattan(self):
+        return sum(abs(x) for x in self.values)
