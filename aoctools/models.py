@@ -1,9 +1,15 @@
 import webbrowser
 from ast import literal_eval
 import requests
+from colorama import Fore, init as colorinit
 from .localstorage import Cache, Cookie
 from .plumbing import parse_result_website, parse_solution_from_website
 
+cg = Fore.GREEN
+cy = Fore.YELLOW
+cr = Fore.RED
+cc = Fore.CYAN
+c0 = Fore.RESET
 
 class AOCD():
 
@@ -16,6 +22,7 @@ class AOCD():
         self.cache = Cache(year, day, delete_cache)
         self.raw = self.get_raw()
         self.is_example = False
+        colorinit(autoreset=True)
 
     def set_example(self, raw_example):
         if not raw_example.endswith('\n'):
@@ -95,26 +102,26 @@ class AOCD():
     def sset(self):
         ret = set(self.slist)
         if len(ret) < len(self):
-            print('WARNING - Parsed set is smaller than list because of duplicate entries')
+            print(cy + 'WARNING - Set is smaller than list because of duplicate entries')
         return ret
 
     @property
     def iset(self):
         ret = set(self.ilist)
         if len(ret) < len(self):
-            print('WARNING - Parsed set is smaller than list because of duplicate entries')
+            print(cy + 'WARNING - Set is smaller than list because of duplicate entries')
         return ret
 
     def sset_split_at(self, sep):
         ret = set(self.slist_split_at(sep))
         if len(ret) < len(self):
-            print('WARNING - Parsed set is smaller than list because of duplicate entries')
+            print(cy + 'WARNING - Set is smaller than list because of duplicate entries')
         return ret
 
     def iset_split_at(self, sep):
         ret = set(self.ilist_split_at(sep))
         if len(ret) < len(self):
-            print('WARNING - Parsed set is smaller than list because of duplicate entries')
+            print(cy + 'WARNING - Set is smaller than list because of duplicate entries')
         return ret
 
     # -----------------------------------------
@@ -172,7 +179,6 @@ class AOCD():
         d = dict()
         for line in self.slist:
             k, v = line.split(sep)
-            print(k, v)
             d[keytype(k)] = valuetype(v)
         return d
 
@@ -194,17 +200,20 @@ class AOCD():
         answer = str(answer)
 
         if self.is_example:
-            print(f'Result of {self.year}-{self.day} Part {part} using EXAMPLE input: "{answer}"')
+            print(f'{cc}{self.year}-{self.day} P{part} {cy}with EXAMPLE INPUT{c0}: {cg}{answer}')
+            print()
             return
         else:
-            print(f'Submitting answer "{answer}" for {self.year}-{self.day} Part {part}')
+            print(f'{cc}SUBMITTING ANSWER for {self.year}-{self.day} Part {part}: {cg}{answer}')
 
         if (sol := self.cache.solution(part)) is not None:
-            print('SOLUTION CACHED\nYour answer is', 'correct' if answer == sol else 'incorrect')
+            print(cy + 'SOLUTION CACHED', end=' ')
+            print('Your answer is', cg + 'correct' if answer == sol else cr + f'incorrect ({sol})')
+            print()
             return False
 
         if answer in self.cache.answers(part):
-            print('SKIPPED: Already submitted earlier')
+            print(f'{cy}WRONG ANSWER SKIPPED{c0}: Already submitted earlier')
             return False
 
         r = requests.post(
@@ -220,7 +229,7 @@ class AOCD():
         parsed_result = parse_result_website(r.text)
         print(parsed_result or r.text)
         if not isinstance(parsed_result, str):
-            print('Invalid parsing result')
+            print(cr + 'Invalid parsing result')
             return False
         elif parsed_result == 'ALREADY SOLVED':
             print('Collecting correct answer from website')
@@ -230,10 +239,10 @@ class AOCD():
             )
             sol = parse_solution_from_website(puzzle_page.text, part)
             if sol is None:
-                print('Cannot read Solution from puzzle page')
+                print(cr + 'Cannot read Solution from puzzle page')
                 return None
             self.cache.add_answer(part, sol, is_solution=True)
-            print('Your answer is', 'correct' if answer == sol else 'incorrect')
+            print('Your answer is', cg + 'correct' if answer == sol else cr + f'incorrect ({sol})')
         elif parsed_result.startswith('SUCCESS'):
             self.cache.add_answer(part, answer, is_solution=True)
         elif not parsed_result.startswith('ERROR:'):
