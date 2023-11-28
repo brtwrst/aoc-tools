@@ -1,2 +1,2 @@
 #!/bin/sh
-pip3 install -e .
+pip install -e . --user --config-settings editable_mode=compat

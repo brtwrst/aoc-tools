@@ -31,9 +31,9 @@ git clone https://github.com/brtwrst/aoc-tools.git
 
 ### Install in edit mode so the packet can be updated just by git pulling
 cd aoc-tools
-pip install -e .
+pip install -e . --config-settings editable_mode=compat
 or
-pip install -e --user .
+pip install -e . --user --config-settings editable_mode=compat
 ```
 
 ## Template file generation 
