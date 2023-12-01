@@ -102,3 +102,6 @@ def bfs(start, goal, findNeighbors):
         closedSet.add(current)
 
     return False
+
+def rreplace(s, old, new, count=-1, /):
+    return new.join(s.rsplit(old, count)) if old else s
