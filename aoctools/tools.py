@@ -119,6 +119,12 @@ def rreplace(s, old, new, count=-1, /):
 
 
 def print_grid(grid, mapping=dict(), not_in_grid=' '):
+    """Print a Grid: A grid is a dict from coordinates to a value.
+    The function assumes that top left corder is (0,0) and that X grows horizontally.
+    {(0,0) : 'A', (1,0) : 'B', (0,1) : 'C', (1,1) : 'D'}
+    is the dict of the grid:
+    AB
+    CD"""
     for y in range(min(p[1] for p in grid), max(p[1] for p in grid)+1):
         for x in range(min(p[0] for p in grid), max(p[0] for p in grid)+1):
             c = grid.get((x, y), not_in_grid)
