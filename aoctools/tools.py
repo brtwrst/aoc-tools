@@ -105,3 +105,10 @@ def bfs(start, goal, findNeighbors):
 
 def rreplace(s, old, new, count=-1, /):
     return new.join(s.rsplit(old, count)) if old else s
+
+def print_grid(grid, mapping=dict(), not_in_grid=' '):
+    for y in range(min(p[1] for p in grid), max(p[1] for p in grid)+1):
+        for x in range(min(p[0] for p in grid), max(p[0] for p in grid)+1):
+            c = grid.get((x, y), not_in_grid)
+            print(mapping.get(c, c) if mapping else c, end='')
+        print()

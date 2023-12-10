@@ -11,6 +11,7 @@ cr = Fore.RED
 cc = Fore.CYAN
 c0 = Fore.RESET
 
+
 class AOCD():
 
     base_url = 'https://adventofcode.com'
@@ -158,13 +159,6 @@ class AOCD():
                 else:
                     grid[x, y] = t(element)
         return grid
-
-    def print_grid(self, grid, mapping=dict(), not_in_grid=' '):
-        for y in range(min(p[1] for p in grid), max(p[1] for p in grid)+1):
-            for x in range(min(p[0] for p in grid), max(p[0] for p in grid)+1):
-                c = grid.get((x, y), not_in_grid)
-                print(mapping.get(c, c), end='')
-            print()
 
     # -----------------------------------------
     # Key-Value Parsing
