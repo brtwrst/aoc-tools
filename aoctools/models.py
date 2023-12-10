@@ -159,10 +159,11 @@ class AOCD():
                     grid[x, y] = t(element)
         return grid
 
-    def print_grid(self, grid, mapping=dict()):
-        for y in range(max((p[1] for p in grid))+1):
-            for x in range(max((p[0] for p in grid))+1):
-                print(mapping.get(grid[x, y], grid[x, y]), end='')
+    def print_grid(self, grid, mapping=dict(), not_in_grid=' '):
+        for y in range(min(p[1] for p in grid), max(p[1] for p in grid)+1):
+            for x in range(min(p[0] for p in grid), max(p[0] for p in grid)+1):
+                c = grid.get((x, y), not_in_grid)
+                print(mapping.get(c, c), end='')
             print()
 
     # -----------------------------------------
