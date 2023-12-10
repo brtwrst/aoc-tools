@@ -1,6 +1,7 @@
 from random import randrange
 from collections import deque
 
+
 def miller_rabin(n):
     def miller_rabin_check(n, a):
         d = n - 1
@@ -15,8 +16,8 @@ def miller_rabin(n):
         2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
     return all(miller_rabin_check(n, a) for a in checks)
 
-def miller_rabin2(n, k=40):
 
+def miller_rabin2(n, k=40):
     # Implementation uses the Miller-Rabin Primality Test
     # The optimal number of rounds for this test is 40
     # See http://stackoverflow.com/questions/6325576/how-many-iterations-of-rabin-miller-should-i-use-for-cryptographic-safe-primes
@@ -47,33 +48,42 @@ def miller_rabin2(n, k=40):
             return False
     return True
 
+
 def matrix_transpose(matrix):
     return list(zip(*matrix))
+
 
 def matrix_transpose_lists(matrix):
     return [list(r) for r in zip(*matrix)]
 
+
 def matrix_transpose_strings(matrix):
     return [''.join(str(c) for c in r) for r in zip(*matrix)]
+
 
 def matrix_transpose_dicts(matrix):
     matrix = [list(r.items()) for r in matrix]
     matrix = matrix_transpose(matrix)
     return [dict(r) for r in matrix]
 
+
 def matrix_rotate(matrix):
     return list(zip(*matrix[::-1]))
+
 
 def matrix_rotate_lists(matrix):
     return [list(r) for r in zip(*matrix[::-1])]
 
+
 def matrix_rotate_strings(matrix):
     return [''.join(str(c) for c in r) for r in zip(*matrix[::-1])]
+
 
 def matrix_rotate_dicts(matrix):
     matrix = [list(r.items()) for r in matrix]
     matrix = matrix_rotate(matrix)
     return [dict(r) for r in matrix]
+
 
 def bfs(start, goal, findNeighbors):
     closedSet = set()
@@ -103,8 +113,10 @@ def bfs(start, goal, findNeighbors):
 
     return False
 
+
 def rreplace(s, old, new, count=-1, /):
     return new.join(s.rsplit(old, count)) if old else s
+
 
 def print_grid(grid, mapping=dict(), not_in_grid=' '):
     for y in range(min(p[1] for p in grid), max(p[1] for p in grid)+1):
