@@ -7,8 +7,7 @@ from aoctools import *
 
 main = ('''
 def main(aocd: AOCD):
-    # aocd.set_example("""""")
-    pass
+    aocd.get_example()
 
 ''')
 
