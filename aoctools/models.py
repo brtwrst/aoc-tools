@@ -3,7 +3,7 @@ from ast import literal_eval
 import requests
 from colorama import Fore, init as colorinit
 from .localstorage import Cache, Cookie
-from .plumbing import parse_result_website, parse_solution_from_website
+from .plumbing import *
 
 cg = Fore.GREEN
 cy = Fore.YELLOW
@@ -30,6 +30,13 @@ class AOCD():
             raw_example += '\n'
         self.raw = raw_example
         self.is_example = True
+
+    def get_example(self):
+        puzzle_page = requests.get(url=self.puzzle_url,cookies={'session': self.cookie})
+        raw_example = parse_example_from_website(puzzle_page.text)
+        if raw_example:
+            self.set_example(raw_example)
+        print('Using Example\n' + raw_example)
 
     def get_raw(self):
         raw = self.cache.input

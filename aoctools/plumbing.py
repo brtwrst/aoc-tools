@@ -40,3 +40,15 @@ def parse_solution_from_website(raw, part):
         print('Unable to find solution for part', part, 'on Website')
         return None
     return answers[part-1]
+
+
+def parse_example_from_website(raw):
+    if not raw.startswith('<!DOCTYPE html>'):
+        print('No HTML Received')
+        return None
+    re_example = re.compile(r'[eE]xample:</p>\n<pre><code>(.*?)</code></pre>', re.DOTALL)
+    example = re_example.findall(raw)
+    if len(example) > 1:
+        print('ERROR: Multiple Examples found')
+        return False
+    return example[0]
