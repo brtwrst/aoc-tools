@@ -86,6 +86,24 @@ class Cache:
         with open(self.input_path, 'w') as f:
             f.write(raw)
 
+    # Example
+    @property
+    def example_path(self):
+        return self.folder / f'{self.year}-{self.day}-example.txt'
+
+    @property
+    def example(self):
+        if not self.example_path.is_file():
+            return None
+
+        with open(self.example_path) as f:
+            return f.read()
+
+    @example.setter
+    def example(self, raw):
+        with open(self.example_path, 'w') as f:
+            f.write(raw)
+
     # Answers
     @property
     def answers_path(self):
@@ -130,3 +148,5 @@ class Cache:
             self.answers_path.unlink()
         if self.input_path.exists():
             self.input_path.unlink()
+        if self.example_path.exists():
+            self.example_path.unlink()
