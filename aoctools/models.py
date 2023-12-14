@@ -41,7 +41,7 @@ class AOCD():
                 return False
             self.cache.example = example
         self.set_example(example)
-        print('Using Example:\n' + example)
+        print(f'{cr}Using Example:\n\n{c0}' + example)
 
     def get_raw(self):
         raw = self.cache.input
