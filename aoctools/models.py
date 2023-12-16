@@ -172,6 +172,18 @@ class AOCD():
                     grid[x, y] = t(element)
         return grid
 
+    @property
+    def grid_width(self):
+        return len(self.slist[0])
+
+    @property
+    def grid_height(self):
+        return len(self.slist)
+
+    @property
+    def grid_dimensions(self):
+        return self.grid_width, self.grid_height
+
     # -----------------------------------------
     # Key-Value Parsing
     # -----------------------------------------
