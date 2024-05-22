@@ -25,11 +25,16 @@ class AOCD():
         self.is_example = False
         colorinit(autoreset=True)
 
-    def set_example(self, raw_example):
+
+    def set_example(self, raw_example, store=False):
         if not raw_example.endswith('\n'):
             raw_example += '\n'
         self.raw = raw_example
         self.is_example = True
+        if store:
+            self.cache.example = raw_example
+        print(f'{cr}Using Example:\n\n{c0}' + raw_example)
+
 
     def get_example(self):
         example = self.cache.example
@@ -39,9 +44,8 @@ class AOCD():
             if not example:
                 print('ERROR parsing example')
                 return False
-            self.cache.example = example
-        self.set_example(example)
-        print(f'{cr}Using Example:\n\n{c0}' + example)
+        self.set_example(example, store=True)
+
 
     def get_raw(self):
         raw = self.cache.input
