@@ -34,7 +34,7 @@ def parse_solution_from_website(raw, part):
     if not raw.startswith('<!DOCTYPE html>'):
         print('No HTML Received')
         return None
-    re_answer = re.compile(r'<p>Your puzzle answer was <code>(.*)</code>.</p>')
+    re_answer = re.compile(r'<p>Your puzzle answer was <code>(.*?)</code>.</p>')
     answers = re_answer.findall(raw)
     if len(answers) < part:
         print('Unable to find solution for part', part, 'on Website')
