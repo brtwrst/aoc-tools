@@ -127,11 +127,11 @@ class AOCD():
         return self.__parse_as_multilist(sep=sep, t=int)
 
     def __parse_as_multilist(self, sep=None, t=str):
-        _list = [list() for _ in range(len(self.as_str.split('\n')[0].split()))]
+        _multilist = [list() for _ in range(len(self.as_str.split('\n')[0].split(sep)))]
         for line in self.slist:
-            for i, item in enumerate(line.split()):
-                _list[i].append(t(item))
-        return _list
+            for i, item in enumerate(line.split(sep)):
+                _multilist[i].append(t(item))
+        return _multilist
 
     # -----------------------------------------
     # Set Parsing

@@ -124,11 +124,11 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
     1,2
     3,4
     ```
-* `aocd.imultilist_split_at(sep=',')` parse input columns as multiple lists of int
+* `aocd.imultilist_split_at(sep=',')` parse input columns as multiple lists of int (split at sep)
     *   ```py
         aocd.imultilist -> [[1,3],[2,4]]
         ```
-* `aocd.smultilist_split_at(sep=',')` parse input columns as multiple lists of str
+* `aocd.smultilist_split_at(sep=',')` parse input columns as multiple lists of str (split at sep)
     *   ```py
         aocd.smultilist -> [['1','3'],['2','4']]
         ```
