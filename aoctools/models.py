@@ -25,7 +25,6 @@ class AOCD():
         self.is_example = False
         colorinit(autoreset=True)
 
-
     def set_example(self, raw_example, store=False):
         if not raw_example.endswith('\n'):
             raw_example += '\n'
@@ -35,17 +34,15 @@ class AOCD():
             self.cache.example = raw_example
         print(f'{cr}Using Example:\n\n{c0}' + raw_example)
 
-
     def get_example(self):
         example = self.cache.example
         if not example:
-            puzzle_page = requests.get(url=self.puzzle_url,cookies={'session': self.cookie})
+            puzzle_page = requests.get(url=self.puzzle_url, cookies={'session': self.cookie})
             example = parse_example_from_website(puzzle_page.text)
             if not example:
                 print('ERROR parsing example')
                 return False
         self.set_example(example, store=True)
-
 
     def get_raw(self):
         raw = self.cache.input
@@ -111,6 +108,30 @@ class AOCD():
 
     def ilist_split_at(self, sep):
         return [int(x) for x in self.slist_split_at(sep)]
+
+    # -----------------------------------------
+    # Multi-List Parsing
+    # -----------------------------------------
+    @property
+    def smultilist(self):
+        return self.__parse_as_multilist(sep=None, t=str)
+
+    @property
+    def imultilist(self):
+        return self.__parse_as_multilist(sep=None, t=int)
+
+    def smultilist_split_at(self, sep):
+        return self.__parse_as_multilist(sep=sep, t=str)
+
+    def imultilist_split_at(self, sep):
+        return self.__parse_as_multilist(sep=sep, t=int)
+
+    def __parse_as_multilist(self, sep=None, t=str):
+        _list = [list() for _ in range(len(self.as_str.split('\n')[0].split()))]
+        for line in self.slist:
+            for i, item in enumerate(line.split()):
+                _list[i].append(t(item))
+        return _list
 
     # -----------------------------------------
     # Set Parsing
