@@ -112,26 +112,46 @@ class AOCD():
     # -----------------------------------------
     # Multi-List Parsing
     # -----------------------------------------
+
+    # -------------Columns---------------
     @property
-    def smultilist(self):
-        return self.__parse_as_multilist(sep=None, t=str)
+    def scolumns(self):
+        return self.__parse_as_multilist(sep=None, t=str, vertical=True)
 
     @property
-    def imultilist(self):
-        return self.__parse_as_multilist(sep=None, t=int)
+    def icolumns(self):
+        return self.__parse_as_multilist(sep=None, t=int, vertical=True)
 
-    def smultilist_split_at(self, sep):
-        return self.__parse_as_multilist(sep=sep, t=str)
+    def scolumns_split_at(self, sep):
+        return self.__parse_as_multilist(sep=sep, t=str, vertical=True)
 
-    def imultilist_split_at(self, sep):
-        return self.__parse_as_multilist(sep=sep, t=int)
+    def icolumns_split_at(self, sep):
+        return self.__parse_as_multilist(sep=sep, t=int, vertical=True)
 
-    def __parse_as_multilist(self, sep=None, t=str):
-        _multilist = [list() for _ in range(len(self.as_str.split('\n')[0].split(sep)))]
-        for line in self.slist:
-            for i, item in enumerate(line.split(sep)):
-                _multilist[i].append(t(item))
-        return _multilist
+    # -------------Rows---------------
+    @property
+    def srows(self):
+        return self.__parse_as_multilist(sep=None, t=str, vertical=False)
+
+    @property
+    def irows(self):
+        return self.__parse_as_multilist(sep=None, t=int, vertical=False)
+
+    def srows_split_at(self, sep):
+        return self.__parse_as_multilist(sep=sep, t=str, vertical=False)
+
+    def irows_split_at(self, sep):
+        return self.__parse_as_multilist(sep=sep, t=int, vertical=False)
+
+    def __parse_as_multilist(self, sep=None, t=str, vertical=False):
+        if vertical:
+            _multilist = [list() for _ in range(len(self.as_str.split('\n')[0].split(sep)))]
+            for line in self.slist:
+                for i, item in enumerate(line.split(sep)):
+                    _multilist[i].append(t(item))
+            return _multilist
+        else:
+            return [[t(n) for n in line.split(sep)] for line in self.slist]
 
     # -----------------------------------------
     # Set Parsing
