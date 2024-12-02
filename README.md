@@ -324,13 +324,13 @@ The tool will inform you if the answer was wrong and it will cache all submitted
 
 ### Use example or custom input
 The tool allows you to use arbitrary input for a Puzzle. This can be used to test with example input or to run your code with different input.  
-While you are in "example mode" and use `AOCD.p1() or AOCD.p2()`, the answer will only be displayed and not submitted to the website. So in order to submit your answer, you have to comment out the `set_example()` or `get_example()` 
+While you are in "example mode" and use `aocd.p1() or aocd.p2()`, the answer will only be displayed and not submitted to the website. So in order to submit your answer, you have to comment out the `set_example()` or `get_example()` 
 
 #### Auto download the example input
-Use `AOCD.get_example()` to attempt to download the example for the day from the adventofcode.com automatically.
+Use `aocd.get_example()` to attempt to download the example for the day from the adventofcode.com automatically.
 
 #### Using arbitrary example input
-Give the input verbatim as multiline string to `AOCD.set_example(<input>)` before parsing. The following example uses the input of https://adventofcode.com/2021/day/3
+Give the input verbatim as multiline string to `aocd.set_example(<input>)` before parsing. The following example uses the input of https://adventofcode.com/2021/day/3
 ```python
 aocd = AOCD(2021, 3)
 aocd.set_example("""00100
