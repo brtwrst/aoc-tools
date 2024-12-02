@@ -104,33 +104,61 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
     *   ```py
         aocd.slist_split_at(';') -> ['1','2','3','4']
         ```
-#### Multi-List Parsing
+#### Multi-List Parsing - Columns
 * Example Input  
     ```
     1 2
     3 4
     ```
-* `aocd.imultilist` parse input columns as multiple lists of int
+* `aocd.icolumns` parse input columns as multiple lists of int
     *   ```py
-        aocd.imultilist -> [[1,3],[2,4]]
+        aocd.icolumns -> [[1,3],[2,4]]
         ```
-* `aocd.smultilist` parse input columns as multiple lists of str
+* `aocd.scolumns` parse input columns as multiple lists of str
     *   ```py
-        aocd.smultilist -> [['1','3'],['2','4']]
+        aocd.scolumns -> [['1','3'],['2','4']]
         ```
-#### Multi-List Parsing (split at arbitrary separator)
+#### Multi-List Parsing - Columns (split at arbitrary separator)
 * Example Input  
     ```
     1,2
     3,4
     ```
-* `aocd.imultilist_split_at(sep=',')` parse input columns as multiple lists of int (split at sep)
+* `aocd.icolumns_split_at(sep=',')` parse input columns as multiple lists of int (split at sep)
     *   ```py
-        aocd.imultilist -> [[1,3],[2,4]]
+        aocd.icolumns -> [[1,3],[2,4]]
         ```
-* `aocd.smultilist_split_at(sep=',')` parse input columns as multiple lists of str (split at sep)
+* `aocd.scolumns_split_at(sep=',')` parse input columns as multiple lists of str (split at sep)
     *   ```py
-        aocd.smultilist -> [['1','3'],['2','4']]
+        aocd.scolumns -> [['1','3'],['2','4']]
+        ```
+#### Multi-List Parsing - Rows
+* Example Input  
+    ```
+    1 2
+    3 4
+    ```
+* `aocd.irows` parse input rows as multiple lists of int
+    *   ```py
+        aocd.irows -> [[1,2],[3,4]]
+        ```
+* `aocd.srows` parse input rows as multiple lists of str
+    *   ```py
+        aocd.srows -> [['1','2'],['3','4']]
+        ```
+#### Multi-List Parsing - Rows (split at arbitrary separator)
+* Example Input  
+    ```
+    1,2
+    3,4
+    ```
+* `aocd.irows_split_at(sep=',')` parse input rows as multiple lists of int (split at sep)
+    *   ```py
+        aocd.irows -> [[1,2],[3,4]]
+        ```
+* `aocd.srows_split_at(sep=',')` parse input rows as multiple lists of str (split at sep)
+    *   ```py
+        aocd.srows -> [['1','2'],['3','4']]
         ```
 #### Set Parsing (split at newline)
 * Example Input  
