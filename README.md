@@ -11,13 +11,19 @@ Collection of tools for solving [Advent of Code](https://adventofcode.com) puzzl
         * [List (split at arbitryry character)](#list-parsing-split-at-arbitrary-separator)
         * [Set (split at newline)](#set-parsing-split-at-newline)
         * [Set (split at arbitryry character)](#set-parsing-split-at-arbitrary-separator)
+        * [Multi-List Parsing - Columns](#multi-list-parsing---columns)
+        * [Multi-List Parsing - Columns (split at arbitrary separator)](#multi-list-parsing---columns-split-at-arbitrary-separator)
+        * [Multi-List Parsing - Rows](#multi-list-parsing---rows)
+        * [Multi-List Parsing - Rows (split at arbitrary separator)](#multi-list-parsing---rows-split-at-arbitrary-separator)
         * [Grid of single characters](#grid-parsing-when-input-is-formatted-as-a-grid-of-single-digitscharacters)
         * [Grid of separated characters](#grid-parsing-when-input-is-formatted-as-a-grid-of-separated-values-on-each-line)
         * [Key-Value pairs](#key-value-parsing-when-input-is-formatted-as-lines-of-key-value-pairs)
         * [Literal](#literal-parsing-when-input-is-formatted-as-a-valid-python-object-list-set-dict)
         * [Literal List](#literal-list-parsing-when-input-is-formatted-as-lines-of-valid-python-objectslists-sets-dicts)
     * [Submitting Output](#submitting-output)
-    * [Using example input](#using-example-input)
+    * [Use example or custom input](#use-example-or-custom-input)
+        * [Auto download the example input](#auto-download-the-example-input)
+        * [Using arbitrary example input](#using-arbitrary-example-input)
 * [Tools](#tools)
     * [Fast primality checks](#fast-primality-checks)
     * [Matrix manipulation functions ](#matrix-manipulation-functions)
@@ -310,12 +316,21 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ```
 
 ### Submitting Output
+You can use the tool to submit your answer to adventofcode.com
+The tool will inform you if the answer was wrong and it will cache all submitted answers so you don't submit the same wrong result twice.
 
 * `aocd.p1(answer)` submit answer for part 1
 * `aocd.p2(answer)` submit answer for part 2
 
-### Using example input
-Give the example input verbatim as multiline string to `AOCD.set_example(<input>)` before parsing. The following example uses the input of https://adventofcode.com/2021/day/3
+### Use example or custom input
+The tool allows you to use arbitrary input for a Puzzle. This can be used to test with example input or to run your code with different input.  
+While you are in "example mode" and use `AOCD.p1() or AOCD.p2()`, the answer will only be displayed and not submitted to the website. So in order to submit your answer, you have to comment out the `set_example()` or `get_example()` 
+
+#### Auto download the example input
+Use `AOCD.get_example()` to attempt to download the example for the day from the adventofcode.com automatically.
+
+#### Using arbitrary example input
+Give the input verbatim as multiline string to `AOCD.set_example(<input>)` before parsing. The following example uses the input of https://adventofcode.com/2021/day/3
 ```python
 aocd = AOCD(2021, 3)
 aocd.set_example("""00100
@@ -330,12 +345,7 @@ aocd.set_example("""00100
 11001
 00010
 01010""")
-
-# Parse after setting example input
-inp = aocd.slist
 ```
-
-If you set example input and call `AOCD.p1() or AOCD.p2()`, the answer will only be displayed and not submitted to the website.
 
 ## Tools
 Some tool functions/classes that help with programming puzzles.
