@@ -51,4 +51,7 @@ def parse_example_from_website(raw):
     if len(example) > 1:
         print('ERROR: Multiple Examples found')
         return False
+    if len(example) == 0:
+        print('ERROR: No Example found')
+        return False
     return example[0]
