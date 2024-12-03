@@ -34,13 +34,15 @@ class AOCD():
             self.cache.example = raw_example
         print(f'{cr}Using Example:\n\n{c0}' + raw_example)
 
-    def get_example(self):
+    def get_example(self, clear_cache=False):
+        if clear_cache:
+            self.cache.delete_example()
         example = self.cache.example
         if not example:
             puzzle_page = requests.get(url=self.puzzle_url, cookies={'session': self.cookie})
             example = parse_example_from_website(puzzle_page.text)
             if not example:
-                print('ERROR parsing example')
+                print('ERROR while parsing example')
                 return False
         self.set_example(example, store=True)
 

@@ -144,9 +144,21 @@ class Cache:
             return None
 
     def delete_files(self):
+        self.delete_answer()
+        self.delete_input()
+        self.delete_example()
+
+    def delete_answer(self):
+        print('Answer Cache deleted for', self.year, self.day)
         if self.answers_path.exists():
             self.answers_path.unlink()
+
+    def delete_input(self):
+        print('Input Cache deleted for', self.year, self.day)
         if self.input_path.exists():
             self.input_path.unlink()
+
+    def delete_example(self):
+        print('Example Cache deleted for', self.year, self.day)
         if self.example_path.exists():
             self.example_path.unlink()
