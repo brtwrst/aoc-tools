@@ -3,6 +3,7 @@ from ast import literal_eval
 import requests
 from colorama import Fore, init as colorinit
 from .localstorage import Cache, Cookie
+from .structs import Vec
 from .plumbing import *
 
 cg = Fore.GREEN
@@ -195,28 +196,34 @@ class AOCD():
     def igrid(self):
         return self.__parse_as_grid(sep=None, t=int)
 
-    def sgrid_split_at(self, sep):
-        return self.__parse_as_grid(sep=sep, t=str)
+    @property
+    def vsgrid(self):
+        return self.__parse_as_grid(sep=None, t=str, vectors=True)
 
-    def igrid_split_at(self, sep):
-        return self.__parse_as_grid(sep=sep, t=int)
+    @property
+    def vigrid(self):
+        return self.__parse_as_grid(sep=None, t=int, vectors=True)
 
-    def mgrid(self, mapping):
-        return self.__parse_as_grid(sep=None, mapping=mapping)
+    def sgrid_split_at(self, sep, vectors=False):
+        return self.__parse_as_grid(sep=sep, t=str, vectors=vectors)
 
-    def mgrid_split_at(self, mapping, sep):
-        return self.__parse_as_grid(sep=sep, mapping=mapping)
+    def igrid_split_at(self, sep, vectors=False):
+        return self.__parse_as_grid(sep=sep, t=int, vectors=vectors)
 
-    def __parse_as_grid(self, sep=None, t=str, mapping=None):
+    def mgrid(self, mapping, vectors=False):
+        return self.__parse_as_grid(sep=None, mapping=mapping, vectors=vectors)
+
+    def mgrid_split_at(self, mapping, sep, vectors=False):
+        return self.__parse_as_grid(sep=sep, mapping=mapping, vectors=vectors)
+
+    def __parse_as_grid(self, sep=None, t=str, mapping=None, vectors=False):
         grid = dict()
         for y, line in enumerate(self.slist):
             if sep is not None:
                 line = line.split(sep)
             for x, element in enumerate(line):
-                if mapping:
-                    grid[x, y] = mapping.get(element, element)
-                else:
-                    grid[x, y] = t(element)
+                coords = Vec(x,y) if vectors else (x, y)
+                grid[coords] = mapping.get(element, element) if mapping else t(element)
         return grid
 
     @property

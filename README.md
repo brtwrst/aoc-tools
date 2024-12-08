@@ -220,7 +220,29 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             (1,1) : '4', 
         }
         ```
-* `aocd.mgrid(mapping)` parse input as a grid of single characters but map them to a new value in the dict
+#### Grid Parsing with Vectors as "coordinates"
+* `aocd.vigrid` parse input as a grid of single digit numbers (split input at newline)
+    *   ```py
+        aocd.igrid ->
+        {
+            Vec(0,0) : 1, 
+            Vec(1,0) : 2, 
+            Vec(0,1) : 3, 
+            Vec(1,1) : 4, 
+        }
+        ```
+* `aocd.vsgrid` parse input as a grid of single characters (split input at newline)
+    *   ```py
+        aocd.sgrid ->
+        {
+            Vec(0,0) : '1', 
+            Vec(1,0) : '2', 
+            Vec(0,1) : '3', 
+            Vec(1,1) : '4', 
+        }
+        ```
+
+* `aocd.mgrid(mapping, vectors=False)` parse input as a grid of single characters but map them to a new value in the dict
     *   ```py
         aocd.mgrid(mapping={'1': 'FOO', '2':'BAR'}) ->
         {
@@ -232,12 +254,13 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
         ```
 
 #### Grid Parsing (when input is formatted as a grid of separated values on each line)
+> You can set vectors=True to get the keys() as Vectors
 * Example Input  
     ```
     1,2
     3,4
     ```
-* `aocd.igrid_split_at(sep)` parse input as a grid of integers (split input at newline) (split line at sep)
+* `aocd.igrid_split_at(sep, vectors=False)` parse input as a grid of integers (split input at newline) (split line at sep)
     *   ```py
         aocd.igrid_split_at(',') ->
         {
@@ -247,7 +270,7 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             (1,1) : 4, 
         }
         ```
-* `aocd.sgrid_split_at(sep)` parse input as a grid of strings (split input at newline) (split line at sep)
+* `aocd.sgrid_split_at(sep, vectors=False)` parse input as a grid of strings (split input at newline) (split line at sep)
     *   ```py
         aocd.sgrid_split_at(',') ->
         {
@@ -257,7 +280,7 @@ This will ask you for your AOC session-cookie on the first run. The cookie can b
             (1,1) : '4', 
         }
         ```
-* `aocd.mgrid_split_at(mapping, sep)` parse input as a grid of single characters but map them to a new value in the dict
+* `aocd.mgrid_split_at(mapping, sep, vectors=False)` parse input as a grid of single characters but map them to a new value in the dict
     *   ```py
         aocd.mgrid(mapping={'1': 'FOO', '2':'BAR'}, sep=',') ->
         {
