@@ -46,11 +46,8 @@ def parse_example_from_website(raw):
     if not raw.startswith('<!DOCTYPE html>'):
         print('No HTML Received')
         return None
-    re_example = re.compile(r'[eE]xample(?:.*):</p>\n<pre><code>(.*?)</code></pre>', re.DOTALL)
+    re_example = re.compile(r'[eE]xample(?:.*?):</p>\n<pre><code>(.*?)</code></pre>', re.DOTALL)
     example = re_example.findall(raw)
-    if len(example) > 1:
-        print('ERROR: Multiple Examples found')
-        return False
     if len(example) == 0:
         print('ERROR: No Example found')
         return False
