@@ -130,3 +130,21 @@ def print_grid(grid, mapping=dict(), not_in_grid=' '):
             c = grid.get((x, y), not_in_grid)
             print(mapping.get(c, c) if mapping else c, end='')
         print()
+
+
+def merge_ranges(ranges: list[tuple]) -> list:
+    """Merge overlapping ranges in a list of (a,b) ranges.
+    [(1,4), (2,10), (15,20)] -> [[1,10], [15,20]]
+    """
+    ranges_merged = list()
+
+    srt = sorted(ranges)
+    current = list(srt[0])
+    for a,b in srt:
+        if a > current[1]:
+            ranges_merged.append(current)
+            current = [a,b]
+        else:
+            current[1] = max(b, current[1])
+    ranges_merged.append(current)
+    return ranges_merged
